@@ -1,22 +1,38 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { AdminLayout } from '@/Layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard(props) {
     return (
-        <AuthenticatedLayout
-            auth={props.auth}
-            errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
-        >
+        <AdminLayout>
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">You're logged in!</div>
-                    </div>
+            <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
+              <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+                <div className="text-sm font-medium text-gray-500 truncate">
+                  Total users
                 </div>
+                <div className="mt-1 text-3xl font-semibold text-gray-900">
+                  12,00
+                </div>
+              </div>
+              <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+                <div className="text-sm font-medium text-gray-500 truncate">
+                  Total Profit
+                </div>
+                <div className="mt-1 text-3xl font-semibold text-gray-900">
+                  $ 450k
+                </div>
+              </div>
+              <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+                <div className="text-sm font-medium text-gray-500 truncate">
+                  Total Orders
+                </div>
+                <div className="mt-1 text-3xl font-semibold text-gray-900">
+                  20k
+                </div>
+              </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

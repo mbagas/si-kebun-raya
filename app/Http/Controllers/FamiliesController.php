@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Families;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class FamiliesController extends Controller
 {
@@ -13,6 +22,11 @@ class FamiliesController extends Controller
     public function index()
     {
         //
+        $families = Families::all();
+        return Inertia::render('Famili/Famili', [
+          'families' => $families,
+          'status' => session('status'),
+        ]);
     }
 
     /**
