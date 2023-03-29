@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FamiliesController;
+use App\Http\Controllers\SpeciesController;
+use App\Http\Controllers\PlotsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,7 +36,9 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource('user', UsersController::class);
-    Route::resource('famili', FamiliesController::class);
+    Route::resource('families', FamiliesController::class);
+    Route::resource('plots', PlotsController::class);
+    Route::resource('species', SpeciesController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

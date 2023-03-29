@@ -8,12 +8,12 @@ import { Button } from 'primereact/button';
 import { Link } from '@inertiajs/react';
 
 
-export default function User(props) {
+export default function Plot(props) {
   const [loading, setLoading] = useState(false);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
-    name: {value:null, matchMode:FilterMatchMode.CONTAINS},
-    email: {value:null, matchMode:FilterMatchMode.CONTAINS}
+    name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    genus: { value: null, matchMode: FilterMatchMode.CONTAINS }
   })
   console.log(props);
 
@@ -31,28 +31,21 @@ export default function User(props) {
   const renderHeader = () => {
     return (
       <div className="flex justify-item-end">
-        <Link href={route('user.create')}>
+        <Link href={route('plots.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
-        
+
       </div>
     );
   };
 
-  // const deleteUser = (e) => {
-  //   e.preventDefault();
-  //   console.log(e);
-  //   destroy(route('user.destroy',e), {
-  //     preserveScroll: true,
-  //     onSuccess: () => closeModal(),
-  //     onError: () => passwordInput.current.focus(),
-  //     onFinish: () => reset(),
-  //   });
-  // }
 
-  function deleteUser(user) {
-    if (confirm("Are you sure you want to delete this user?")) {
-      destroy(route("user.destroy", user.id));
+  function deletePlot(plot) {
+    console.log(plot);
+    if (confirm("Are you sure you want to delete this plot?")) {
+      destroy(route("plots.destroy", plot), {
+        onFinish: () => reset(),
+      });
     }
   }
 
@@ -60,8 +53,8 @@ export default function User(props) {
 
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('user.edit',rowData)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link> 
-      <Link><Button onClick={() => deleteUser(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+      <Link href={route('plots.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
+      <Link><Button onClick={() => deletePlot(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
     </div>;
   }
 
@@ -71,17 +64,18 @@ export default function User(props) {
 
   return (
     <AdminLayout>
-      <Head title="User" />
+      <Head title="Petak" />
       <h2 className="text-2xl font-bold">
-        User
+        Petak
       </h2>
       <div className="mt-2">
-        <DataTable value={props.users} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['name', 'email']} header={header}  emptyMessage="No data found."
+        <DataTable value={props.plots} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+          globalFilterFields={['name', 'latitude', 'longitude']} header={header} emptyMessage="No data found."
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
           <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
+          <Column field="latitude" header="Latitude" filter filterPlaceholder="Search by latitude" sortable style={{ minWidth: '12rem' }} />
+          <Column field="longitude" header="Longitude" filter filterPlaceholder="Search by longitude" sortable style={{ minWidth: '12rem' }} />
           <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)}/>
         </DataTable>
       </div>

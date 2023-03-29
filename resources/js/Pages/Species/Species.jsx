@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 import { Link } from '@inertiajs/react';
 
 
-export default function Famili(props) {
+export default function Species(props) {
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -30,7 +30,7 @@ export default function Famili(props) {
   const renderHeader = () => {
     return (
       <div className="flex justify-item-end">
-        <Link href={route('families.create')}>
+        <Link href={route('species.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
 
@@ -39,12 +39,14 @@ export default function Famili(props) {
   };
 
 
-  function deletefamili(famili) {
-    console.log(famili);
-    if (confirm("Are you sure you want to delete this famili?")) {
-      destroy(route("families.destroy", famili.id), {
+  function deleteSpecies(species) {
+    console.log(species);
+    if (confirm("Are you sure you want to delete this species?")) {
+      destroy(route("species.destroy", species.id), {
+        preserveScroll: true,
         onFinish: () => reset(),
       });
+
     }
   }
 
@@ -52,8 +54,8 @@ export default function Famili(props) {
 
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('families.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
-      <Link><Button onClick={() => deletefamili(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+      <Link href={route('species.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
+      <Link><Button onClick={() => deleteSpecies(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
     </div>;
   }
 
@@ -63,18 +65,22 @@ export default function Famili(props) {
 
   return (
     <AdminLayout>
-      <Head title="famili" />
+      <Head title="species" />
       <h2 className="text-2xl font-bold">
-        Famili
+        species
       </h2>
       <div className="mt-2">
-        <DataTable value={props.families} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['name', 'genus']} header={header} emptyMessage="No data found."
+        <DataTable value={props.species} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+          globalFilterFields={['access_number', 'name', 'local_name', 'famili', 'collection_origin', 'planting_date']} header={header} emptyMessage="No data found."
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
+          <Column field="access_number" header="Access number" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
           <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="genus" header="Genus" filter filterPlaceholder="Search by genus" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} />
+          <Column field="local_name" header="Local name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="collection_origin" header="Collection origin" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="planting_date" header="Planting date" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '15rem' }} />
         </DataTable>
       </div>
     </AdminLayout>

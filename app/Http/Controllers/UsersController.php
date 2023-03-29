@@ -14,6 +14,8 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use App\Models\Families;
+
 class UsersController extends Controller
 {
     /**

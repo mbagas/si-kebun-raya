@@ -19,8 +19,8 @@ return new class extends Migration
           $table->string('name')->nullable();
           $table->string('local_name')->nullable();
           $table->bigInteger('family_id')->nullable();
-          $table->bigInteger('petak_id')->nullable();
-          $table->datetime('planting_date')->nullable();
+          $table->bigInteger('plot_id')->nullable();
+          $table->date('planting_date')->nullable();
           $table->string('planter')->nullable();
           $table->string('collection_origin')->nullable();
           $table->integer('amount_in_nurseries')->nullable();

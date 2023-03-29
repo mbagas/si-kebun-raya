@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Families;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+
 
 class FamiliesController extends Controller
 {
@@ -35,6 +31,7 @@ class FamiliesController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Famili/AddFamili');
     }
 
     /**
@@ -43,6 +40,16 @@ class FamiliesController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+          'name' => 'required|string|max:255',
+        ]);
+
+        $famili = Families::create([
+          'name' => $request->name,
+          'genus' => $request->genus,
+        ]);
+
+    return to_route('families.index')->with('message', 'User has been created successfully');
     }
 
     /**
@@ -56,24 +63,39 @@ class FamiliesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Families $families)
-    {
-        //
-    }
+  public function edit(Families $family): Response
+  {
+    //
+    // dd($family);
+    return Inertia::render('Famili/EditFamili', [
+      'famili' => $family,
+    ]);
+  }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Families $families)
+    public function update(Request $request, Families $family)
     {
         //
+        // dd($request);
+        $family->update([
+          'name' => $request->name,
+          'genus' => $request->genus,
+        ]);
+
+        return to_route('families.index')->with('message', 'Update Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Families $families)
+    public function destroy(Families $family)
     {
         //
+        $family->delete();
+        return to_route('families.index')->with('message', 'Delete Successfully');
     }
 }
+
+
