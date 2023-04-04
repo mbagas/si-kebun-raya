@@ -93,6 +93,7 @@ class FamiliesController extends Controller
     public function destroy(Families $family)
     {
         //
+        // dd($family);
         $family->delete();
         return to_route('families.index')->with('message', 'Delete Successfully');
     }

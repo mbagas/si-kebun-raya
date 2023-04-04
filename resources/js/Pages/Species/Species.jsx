@@ -11,8 +11,12 @@ import { Link } from '@inertiajs/react';
 export default function Species(props) {
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
+    access_number: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    genus: { value: null, matchMode: FilterMatchMode.CONTAINS }
+    local_name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    famili: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    collection_origin: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    planting_date: { value: null, matchMode: FilterMatchMode.CONTAINS },
   })
   console.log(props);
 
@@ -53,14 +57,11 @@ export default function Species(props) {
   const header = renderHeader();
 
   const actionTemplate = (rowData, column) => {
-    return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('species.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
-      <Link><Button onClick={() => deleteSpecies(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+    return <div className="grid grid-cols-3 gap-1">
+      <Link href={route('species.show', rowData.id)}><Button icon="pi pi-eye" severity="success" /></Link>
+      <Link href={route('species.edit', rowData.id)}><Button icon="pi pi-pencil" severity="warning" /></Link>
+      <Link><Button onClick={() => deleteSpecies(rowData)} icon="pi pi-trash" severity="danger" /></Link>
     </div>;
-  }
-
-  const rowColumnClick = (rowData) => {
-    console.log(rowData);
   }
 
   return (

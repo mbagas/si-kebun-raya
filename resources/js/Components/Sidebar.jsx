@@ -127,8 +127,9 @@ export default function Sidebar({ children }) {
                   </Link>
                 </li>
                 <li className="rounded-sm">
-                  <a
-                    href="#"
+                  <Link
+                    method="post"
+                    href={route('logout')}
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
                     <svg
@@ -148,13 +149,13 @@ export default function Sidebar({ children }) {
                     <span className="text-gray-100">
                       Logout
                     </span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-
+        
 
         <div className="container px-6 lg:mx-auto mt-12 w-100 overflow-x-auto">
           {children}

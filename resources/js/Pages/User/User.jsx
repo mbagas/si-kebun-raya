@@ -32,7 +32,7 @@ export default function User(props) {
     return (
       <div className="flex justify-item-end">
         <Link href={route('user.create')}>
-          <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
+          <Button type="button" icon="pi pi-plus" severity="success" />
         </Link>
         
       </div>
@@ -60,13 +60,9 @@ export default function User(props) {
 
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('user.edit',rowData)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link> 
-      <Link><Button onClick={() => deleteUser(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+      <Link href={route('user.edit',rowData)}><Button icon="pi pi-pencil" severity="warning" /></Link> 
+      <Link><Button onClick={() => deleteUser(rowData)} icon="pi pi-trash" severity="danger" /></Link>
     </div>;
-  }
-
-  const rowColumnClick = (rowData) => {
-    console.log(rowData);
   }
 
   return (
@@ -82,7 +78,7 @@ export default function User(props) {
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
           <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
           <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)}/>
+          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
         </DataTable>
       </div>
     </AdminLayout>

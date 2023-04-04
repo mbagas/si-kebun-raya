@@ -13,9 +13,9 @@ export default function Plot(props) {
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    genus: { value: null, matchMode: FilterMatchMode.CONTAINS }
+    latitude: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    longitude: { value: null, matchMode: FilterMatchMode.CONTAINS }
   })
-  console.log(props);
 
   const {
     data,
@@ -53,13 +53,9 @@ export default function Plot(props) {
 
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('plots.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
-      <Link><Button onClick={() => deletePlot(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+      <Link href={route('plots.edit', rowData.id)}><Button icon="pi pi-pencil" severity="warning" /></Link>
+      <Link><Button onClick={() => deletePlot(rowData)} icon="pi pi-trash" severity="danger" /></Link>
     </div>;
-  }
-
-  const rowColumnClick = (rowData) => {
-    console.log(rowData);
   }
 
   return (
@@ -76,7 +72,7 @@ export default function Plot(props) {
           <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
           <Column field="latitude" header="Latitude" filter filterPlaceholder="Search by latitude" sortable style={{ minWidth: '12rem' }} />
           <Column field="longitude" header="Longitude" filter filterPlaceholder="Search by longitude" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)}/>
+          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
         </DataTable>
       </div>
     </AdminLayout>

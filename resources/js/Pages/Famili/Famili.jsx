@@ -52,13 +52,9 @@ export default function Famili(props) {
 
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('families.edit', rowData.id)}><Button onClick={() => rowColumnClick(rowData)} icon="pi pi-pencil" label="Edit" severity="warning" /></Link>
-      <Link><Button onClick={() => deletefamili(rowData)} icon="pi pi-trash" label="Hapus" severity="danger" /></Link>
+      <Link href={route('families.edit', rowData.id)}><Button icon="pi pi-pencil" severity="warning" /></Link>
+      <Link><Button onClick={() => deletefamili(rowData)} icon="pi pi-trash" severity="danger" /></Link>
     </div>;
-  }
-
-  const rowColumnClick = (rowData) => {
-    console.log(rowData);
   }
 
   return (
@@ -74,7 +70,7 @@ export default function Famili(props) {
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
           <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
           <Column field="genus" header="Genus" filter filterPlaceholder="Search by genus" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} />
+          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
         </DataTable>
       </div>
     </AdminLayout>

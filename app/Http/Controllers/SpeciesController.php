@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Species;
 use App\Models\Families;
+use App\Models\Plants;
 use App\Models\Plots;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -49,7 +50,7 @@ class SpeciesController extends Controller
     //
     $request->validate([
       'collectionNumber' => 'required|string|max:255',
-      'accessNumber' => 'required|string|max:255',
+      'accessNumber' => 'required|string|max:255|unique:species,access_number',
       'collectorNumber' => 'required|string|max:255',
       'name' => 'string|max:255',
       'localName' => 'string|max:255',
@@ -72,7 +73,7 @@ class SpeciesController extends Controller
     $user = Auth::user();
 
     if (is_file($request->image)) {
-      $fileName = $request->accessNumber . '_' . $request->name . '.' . $request->image->extension();
+      $fileName = $request->id . '_' . $request->accessNumber . '.' . $request->image->extension();
       $request->image->move(public_path('speciesPhoto'), $fileName);
 
       $species = Species::create([
@@ -135,6 +136,10 @@ class SpeciesController extends Controller
   public function show(Species $species)
   {
     //
+    
+    return Inertia::render('Species/DetailSpecies', [
+      'species' => $species->load('famili','plot','plant')
+    ]);
   }
 
   /**
@@ -183,9 +188,12 @@ class SpeciesController extends Controller
     $user = Auth::user();
 
     if (is_file($request->image)) {
-      if (file_exists(public_path('speciesPhoto/'. $species->image[1]))) {
-        unlink(public_path('speciesPhoto/' . $species->image[1]));
-      }
+      if($species->image[1] != null) {
+        if (file_exists(public_path('speciesPhoto/' . $species->image[1]))) {
+          unlink(public_path('speciesPhoto/' . $species->image[1]));
+        }
+      } 
+      
       $fileName = $request->accessNumber . '_' . $request->name . '.' . $request->image->extension();
       $request->image->move(public_path('speciesPhoto'), $fileName);
       $species->update([
@@ -247,9 +255,11 @@ class SpeciesController extends Controller
   public function destroy(Species $species)
   {
     //
-    if (file_exists(public_path('speciesPhoto/' . $species->image[1]))) {
-      unlink(public_path('speciesPhoto/' . $species->image[1]));
-    }
+    if ($species->image[1] != null) {
+      if (file_exists(public_path('speciesPhoto/' . $species->image[1]))) {
+        unlink(public_path('speciesPhoto/' . $species->image[1]));
+      }
+    } 
     $species->delete();
     return to_route('families.index')->with('message', 'Delete Successfully');
   }
