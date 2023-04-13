@@ -35,13 +35,21 @@ class Species extends Model
     'benefit',
     'way_to_collect',
     'user_id',
+    'species_url'
   ];
+
+
 
   protected function image(): Attribute
   {
     return Attribute::make(
       get: fn ($value) => [url('speciesPhoto/' . $value), $value],
     );
+  }
+
+  protected function getSpeciesUrlAttribute()
+  {
+    return url('species/' . $this->id);
   }
 
   public function famili(): BelongsTo

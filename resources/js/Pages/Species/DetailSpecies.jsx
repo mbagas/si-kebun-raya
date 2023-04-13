@@ -10,9 +10,10 @@ import TextInput from '@/Components/TextInput';
 import { Column } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { router } from '@inertiajs/react'
 import { Dialog } from 'primereact/dialog';
+import { QRCodeCanvas } from 'qrcode.react';
 
 
 export default function AddSpecies(props) {
@@ -108,7 +109,7 @@ export default function AddSpecies(props) {
     // setPlantPhoto([1, URL.createObjectURL(e.target.files[0])]);
     // setPlantPhoto[2](URL.createObjectURL(plantPhoto[2]));
   }
-  console.log(plantPhoto);
+  console.log(props.speciesUrl);
 
   const renderHeader = () => {
     return (
@@ -128,6 +129,18 @@ export default function AddSpecies(props) {
     </div>;
   }
 
+  const qrRef = useRef();
+  const downloadQRCode = () => {
+    let canvas = qrRef.current.querySelector("canvas");
+    let image = canvas.toDataURL("image/png");
+    let anchor = document.createElement("a");
+    anchor.href = image;
+    anchor.download = `qr-code.png`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+  };
+
   return (
     <AdminLayout>
       <Head title="Add Species" />
@@ -137,6 +150,28 @@ export default function AddSpecies(props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4">
         {/* Data Species */}
         <div className="grid grid-cols-1 gap-y-2">
+          <div className="grid grid-cols-2 gap-x-2">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                QR Code :
+              </label>
+            </div>
+            <div className="grid grid-row-2 gap-y-2">
+              <div ref={qrRef}>
+                <QRCodeCanvas
+                id="qrCode"
+                value={props.speciesUrl}
+                size={150}
+                level={"H"}
+              />
+              </div>
+              <div>
+                <Button onClick={downloadQRCode} icon="pi pi-trash" label="Download" />
+                  
+              </div>
+              
+            </div>
+          </div>
           <div className="grid grid-cols-2 gap-x-2">
             <div>
               <label className="font-medium text-sm text-gray-700">

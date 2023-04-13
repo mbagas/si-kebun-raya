@@ -139,9 +139,10 @@ class SpeciesController extends Controller
   public function show(Species $species)
   {
     //
-    
+    // dd($species->speciesUrl);
     return Inertia::render('Species/DetailSpecies', [
-      'species' => $species->load('famili','plot','plant')
+      'species' => $species->load('famili','plot','plant'),
+      'speciesUrl' => $species->speciesUrl
     ]);
   }
 
