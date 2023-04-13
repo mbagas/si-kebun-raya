@@ -33,6 +33,7 @@ class Species extends Model
     'image',
     'description',
     'benefit',
+    'way_to_collect',
     'user_id',
   ];
 

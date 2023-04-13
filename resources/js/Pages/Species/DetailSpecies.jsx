@@ -135,6 +135,7 @@ export default function AddSpecies(props) {
         Tambah Species
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4">
+        {/* Data Species */}
         <div className="grid grid-cols-1 gap-y-2">
           <div className="grid grid-cols-2 gap-x-2">
             <div>
@@ -143,7 +144,7 @@ export default function AddSpecies(props) {
               </label>
             </div>
             <div>
-              <Image src={props.species.image[0]} alt="Image" width="250" preview />
+              <Image src={props.species.image[0]} onError={(e) => e.target.src = "https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png"} alt="Image" width="250" preview />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-2">
@@ -341,6 +342,18 @@ export default function AddSpecies(props) {
           <div className="grid grid-cols-2 gap-x-2">
             <div>
               <label className="font-medium text-sm text-gray-700">
+                Cara Mendapatkan :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.way_to_collect}
+              </label>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-x-2">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
                 Jenis Tertera :
               </label>
             </div>
@@ -364,6 +377,7 @@ export default function AddSpecies(props) {
           </div>
           
         </div>
+        {/* Koleksi Spesimen */}
         <div>
           <h4 className="text-xl font-bold">
             Koleksi Tanaman
@@ -418,7 +432,7 @@ export default function AddSpecies(props) {
               <div className="mt-4">
                 <InputLabel htmlFor="genus" value="Status Tanaman" />
 
-                <Dropdown value={data.status} optionValue="name" onChange={(e) => setData('status', e.value)} options={[{ name: 'mati' }, { name: 'hidup' }]} optionLabel="name"
+                <Dropdown value={data.status} optionValue="name" onChange={(e) => setData('status', e.value)} options={[{ name: 'mati' }, { name: 'hidup' }, { name: 'sakit' }]} optionLabel="name"
                   placeholder="Select status" className="w-full md:w-14rem" />
 
                 <InputError message={errors.genus} className="mt-2" />
@@ -426,7 +440,7 @@ export default function AddSpecies(props) {
               <div className="mt-4">
                 <InputLabel htmlFor="genus" value="Gambar Tanaman" />
                 {
-                  plantPhoto[1] && isEditing ? <Image src={plantPhoto[0]} alt="Image" width="250" preview /> : ''
+                  isEditing ? <Image src={plantPhoto[0]} onError={(e) => e.target.src ="https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png"} alt="Image" width="250" preview /> : ''
                 }
                 
                 <input

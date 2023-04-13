@@ -65,6 +65,7 @@ class SpeciesController extends Controller
       'plantingCoordinate' => 'string',
       'description' => 'string',
       'benefit' => 'string',
+      'wayToCollect' => 'string',
     ]);
 
     $typeExist = $request->name ? 1 : 0;
@@ -97,6 +98,7 @@ class SpeciesController extends Controller
         'image' => $fileName,
         'description' => $request->description,
         'benefit' => $request->benefit,
+        'way_to_collect' => $request->wayToCollect,
         'user_id' => $user->id,
       ]);
     } else {
@@ -120,6 +122,7 @@ class SpeciesController extends Controller
         'planting_coordinate' => $request->plantingCoordinate,
         'description' => $request->description,
         'benefit' => $request->benefit,
+        'way_to_collect' => $request->wayToCollect,
         'user_id' => $user->id,
       ]);
     }
@@ -180,6 +183,7 @@ class SpeciesController extends Controller
       'plantingCoordinate' => 'string',
       'description' => 'string',
       'benefit' => 'string',
+      'wayToCollect' => 'string',
     ]);
 
     $typeExist = $request->name ? 1 : 0;
@@ -217,6 +221,7 @@ class SpeciesController extends Controller
         'planting_coordinate' => $request->plantingCoordinate,
         'description' => $request->description,
         'benefit' => $request->benefit,
+        'way_to_collect' => $request->wayToCollect,
         'user_id' => $user->id,
       ]);
     } else {
@@ -240,6 +245,7 @@ class SpeciesController extends Controller
         'planting_coordinate' => $request->plantingCoordinate,
         'description' => $request->description,
         'benefit' => $request->benefit,
+        'way_to_collect' => $request->wayToCollect,
         'user_id' => $user->id,
       ]);
     }

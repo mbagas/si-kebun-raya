@@ -20,6 +20,8 @@
     },
     "dependencies": {
         "primeicons": "^6.0.1",
-        "primereact": "^9.2.0"
+        "primereact": "^9.2.0",
+        "qrcode.react": "^3.1.0",
+        "react-to-print": "^2.14.12"
     }
 }

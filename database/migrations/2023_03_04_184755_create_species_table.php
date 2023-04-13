@@ -33,6 +33,7 @@ return new class extends Migration
           $table->string('image')->nullable();
           $table->text('description')->nullable();
           $table->text('benefit')->nullable();
+          $table->string('way_to_collect')->nullable();
           $table->bigInteger('user_id');
           $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plants;
+use App\Models\Species;
 use Illuminate\Http\Request;
 
 class PlantsController extends Controller
@@ -57,7 +58,13 @@ class PlantsController extends Controller
         'status' => $request->status,
         'planter' => $request->planter,
       ]);
-
+    }
+    if($plant->species_id) {
+      $species = Species::find($plant->species_id);
+      $species->update([
+        'amount_in_nurseries' => $species->amount_in_nurseries-1,
+        'amount_in_field' => $species->amount_in_field+1,
+      ]);
     }
 
     return back();

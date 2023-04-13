@@ -36,6 +36,7 @@ export default function AddSpecies(props) {
     image: '',
     description: props.species.description,
     benefit: props.species.benefit,
+    wayToCollect: props.species.way_to_collect,
     userId: props.species.user_id,
   });
 
@@ -279,6 +280,14 @@ export default function AddSpecies(props) {
           <InputTextarea name="benefit" autoResize value={data.benefit} onChange={handleOnChange} rows={5} cols={90} />
 
           <InputError message={errors.benefit} className="mt-2" />
+        </div>
+        <div className="mt-4">
+          <InputLabel htmlFor="wayToCollect" value="Cara Mendapatkan" />
+
+          <Dropdown value={data.wayToCollect} optionValue="name" onChange={(e) => setData('wayToCollect', e.value)} options={[{ name: 'hibah' }, { name: 'eksplorasi' }, { name: 'pertukaran' }]} optionLabel="name"
+            placeholder="Select status" className="w-full md:w-14rem" />
+
+          <InputError message={errors.wayToCollect} className="mt-2" />
         </div>
 
 

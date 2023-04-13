@@ -75,12 +75,13 @@ export default function Species(props) {
           globalFilterFields={['access_number', 'name', 'local_name', 'famili', 'collection_origin', 'planting_date']} header={header} emptyMessage="No data found."
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="access_number" header="Access number" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="local_name" header="Local name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="collection_origin" header="Collection origin" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="planting_date" header="Planting date" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="access_number" header="No Akses" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="local_name" header="Nama Lokal" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="collection_origin" header="Asal Koleksi" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="planting_date" header="Tanggal Tanam" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+          <Column field="way_to_collect" header="Cara Mendapatkan" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
           <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '15rem' }} />
         </DataTable>
       </div>
