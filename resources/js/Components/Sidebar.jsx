@@ -95,7 +95,7 @@ export default function Sidebar({ children }) {
                     href={route('species.index')}
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
-                    <i className="pi pi-user" style={{ color: 'white', fontSize: '1.5rem' }}></i>
+                    <i className="pi pi-flag" style={{ color: 'white', fontSize: '1.5rem' }}></i>
                     <span className="text-gray-100">Master Data Spesies</span>
                   </Link>
                 </li>
@@ -122,8 +122,17 @@ export default function Sidebar({ children }) {
                     href={route('plots.index')}
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
-                    <i className="pi pi-file" style={{ color: 'white', fontSize: '1.5rem' }}></i>
+                    <i className="pi pi-send" style={{ color: 'white', fontSize: '1.5rem' }}></i>
                     <span className="text-gray-100">Permintaan Data</span>
+                  </Link>
+                </li>
+                <li className="rounded-sm">
+                  <Link
+                    href={route('buku_kebun')}
+                    className="flex items-center p-2 space-x-3 rounded-md"
+                  >
+                    <i className="pi pi-file" style={{ color: 'white', fontSize: '1.5rem' }}></i>
+                    <span className="text-gray-100">Buku Kebun</span>
                   </Link>
                 </li>
                 <li className="rounded-sm">

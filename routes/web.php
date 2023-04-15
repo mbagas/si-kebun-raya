@@ -6,6 +6,7 @@ use App\Http\Controllers\FamiliesController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\PlotsController;
 use App\Http\Controllers\PlantsController;
+use App\Http\Controllers\BukuKebunController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('species', SpeciesController::class);
     Route::resource('plants', PlantsController::class);
 
+    Route::get('/buku-kebun', [BukuKebunController::class, 'index'])->name('buku_kebun');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

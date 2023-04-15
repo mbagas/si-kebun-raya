@@ -18,6 +18,6 @@ class Plots extends Model
 
   public function species(): HasMany
   {
-    return $this->hasMany(Species::class, 'petak_id');
+    return $this->hasMany(Species::class, 'plot_id');
   }
 }
