@@ -140,10 +140,18 @@ class SpeciesController extends Controller
   {
     //
     // dd($species->speciesUrl);
-    return Inertia::render('Species/DetailSpecies', [
-      'species' => $species->load('famili','plot','plant'),
-      'speciesUrl' => $species->speciesUrl
-    ]);
+    if(Auth::check()) {
+      return Inertia::render('Species/DetailSpecies', [
+        'species' => $species->load('famili', 'plot', 'plant'),
+        'speciesUrl' => $species->speciesUrl
+      ]);
+    } else {
+      
+      return Inertia::render('Guest/DetailSpeciesGuest', [
+        'species' => $species->load('famili', 'plot'),
+      ]);
+    }
+    
   }
 
   /**

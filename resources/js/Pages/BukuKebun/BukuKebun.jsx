@@ -8,7 +8,6 @@ import TemplateBukuKebun from '@/Components/TemplateBukuKebun';
 import { Dropdown } from 'primereact/dropdown';
 import React, { useState, useRef, useCallback } from "react";
 import { useReactToPrint } from 'react-to-print';
-import ReactToPrint from 'react-to-print';
 
 export default function BukuKebun(props) {
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,9 @@ export default function BukuKebun(props) {
   // console.log(selectedPlot);
 
   const handlePrint = useReactToPrint({
+    removeAfterPrint: true,
     content: () => componentRef.current,
+    documentTitle: "AwesomeFileName",
   });
 
   return (

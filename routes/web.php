@@ -7,6 +7,7 @@ use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\PlotsController;
 use App\Http\Controllers\PlantsController;
 use App\Http\Controllers\BukuKebunController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,12 +36,15 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::get('/guest', [GuestController::class, 'index'])->name('guest');
 
+Route::resource('species', SpeciesController::class)->only(['show']);
+
+Route::middleware('auth')->group(function () {
     Route::resource('user', UsersController::class);
     Route::resource('families', FamiliesController::class);
     Route::resource('plots', PlotsController::class);
-    Route::resource('species', SpeciesController::class);
+    Route::resource('species', SpeciesController::class)->only(['index','create','edit','store','update','destroy']);
     Route::resource('plants', PlantsController::class);
 
     Route::get('/buku-kebun', [BukuKebunController::class, 'index'])->name('buku_kebun');
@@ -49,5 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
