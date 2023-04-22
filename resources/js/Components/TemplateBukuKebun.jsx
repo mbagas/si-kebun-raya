@@ -1,9 +1,40 @@
-import React, { useState, useRef } from "react";
+import { data } from "autoprefixer";
+import React, { useState, useRef, useEffect } from "react";
 
 
 
 const TemplateBukuKebun = React.forwardRef((props, ref) => {
+  const [totalHidup, setTotalHidup] = useState(0);
+  const [totalMati, setTotalMati] = useState(0);
+  const [totalSakit, setTotalSakit] = useState(0);
   console.log(props)
+  useEffect(() => {
+    let hidup = 0
+    props.data.species.map((item) => {
+      hidup += item.plant.reduce((acc, obj) => {
+        return obj.status == 'hidup' ? acc + 1 : acc + 0;
+      }, 0)
+    })
+    setTotalHidup(hidup)
+
+    let mati = 0
+    props.data.species.map((item) => {
+      mati += item.plant.reduce((acc, obj) => {
+        return obj.status == 'mati' ? acc + 1 : acc + 0;
+      }, 0)
+    })
+    setTotalMati(mati)
+
+    let sakit = 0
+    props.data.species.map((item) => {
+      sakit += item.plant.reduce((acc, obj) => {
+        return obj.status == 'sakit' ? acc + 1 : acc + 0;
+      }, 0)
+    })
+    setTotalSakit(sakit)
+
+  },[0])
+
   return (
     <div ref={ref}>
       <style type="text/css" media="print">
@@ -11,7 +42,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
       </style>
 
       <div className="flex flex-col gap-3 md:gap-1">
-        <div className="grid grid-rows-3 gap-1 h-auto">
+        <div className="grid grid-rows-2 gap-1 h-auto">
           <div className="flex justify-center">
             <h4 className="text-2xl font-bold justify-self-center">BUKU KEBUN</h4>   
           </div>
@@ -22,8 +53,8 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
         </div>
 
         <div className="">
-          <h4 className="text-l font-bold">VAK : V</h4>
-          <h4 className="text-l font-bold">PETAK/ ANAK PETAK : V A "12512512515"</h4>
+          <h4 className="text-l font-bold">VAK : {props.data.name}</h4>
+          <h4 className="text-l font-bold">PETAK/ ANAK PETAK : {props.data.name} "{props.data.latitude} {props.data.longitude}"</h4>
         </div>
 
         <div>
@@ -45,10 +76,13 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                     <>
                     <tr>
                       <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {index} </td>
-                      <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {species.collection_number} </td>
+                        <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {species.collection_number}{
+                          species.plant.length > 0 ? '-' + species.plant.map((item) => ' ' + species.collection_number + item.access_number) : ''
+                        }  </td>
                       <td className="border border-black p-1"> {species.collector_number} </td>
-                      <td className="border border-black p-1"> {species.collection_number} </td>
-                      <td className="border border-black p-1">fabaecae margarin; myraetace; hibah dari eksplorasi dari bogor;</td>
+                      <td className="border border-black p-1"> {species.access_number} </td>
+                      <td className="border border-black p-1">{species.famili.genus} {species.name}; {species.famili.name}; didapatkan dari {species.way_to_collect}; 
+                      ditanam oleh {species.plant.map((plant, index) => ' '+plant.planter+',')} pada {species.planting_date}.</td>
                       <td className="border border-black p-1">-</td>
                     </tr>
                     {species.plant.map((plant, index) => {
@@ -58,7 +92,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                           <>
                               <tr>
                                 <td rowSpan={species.plant.length} className="border border-black p-1">Titik tanam dan kondisi tanaman</td>
-                                <td className="border border-black p-1"> {plant.access_number} </td>
+                                <td className="border border-black p-1"> {species.collection_number}{plant.access_number} </td>
                                 <td className="border border-black p-1"> {plant.coordinate} </td>
                                 <td className="border border-black p-1"> {plant.status} </td>
                               </tr>
@@ -66,7 +100,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                           ) : (
                           <>
                                 <tr>
-                                  <td className="border border-black p-1"> {plant.access_number} </td>
+                                  <td className="border border-black p-1"> {species.collection_number}{plant.access_number} </td>
                                   <td className="border border-black p-1"> {plant.coordinate} </td>
                                   <td className="border border-black p-1"> {plant.status} </td>
                                 </tr>
@@ -80,46 +114,22 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                   )
                 })
               }
-
-              {/* <tr>
-                <td rowSpan='4' className="border border-black p-1">1</td>
-                <td rowSpan='4' className="border border-black p-1">1</td>
-                <td className="border border-black p-1">-</td>
-                <td className="border border-black p-1">IT12451</td>
-                <td className="border border-black p-1">fabaecae margarin; myraetace; hibah dari eksplorasi dari bogor;</td>
-                <td className="border border-black p-1">-</td>
-              </tr> */}
-
-              {/* <tr>
-                <td rowSpan='3' className="border border-black p-1">Titik tanam dan kondisi tanaman</td>
-                <td className="border border-black p-1">1a</td>
-                <td className="border border-black p-1">Koordinat -12525125</td>
-                <td className="border border-black p-1">Hidup</td>
-              </tr>
-              <tr>
-                <td className="border border-black p-1">1b</td>
-                <td className="border border-black p-1">Koordinat -12525125</td>
-                <td className="border border-black p-1">Hidup</td>
-              </tr>
-              <tr>
-                <td className="border border-black p-1">1c</td>
-                <td className="border border-black p-1">Koordinat -12525125</td>
-                <td className="border border-black p-1">Hidup</td>
-              </tr> */}
-
             </tbody>
           </table>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-2">
           <div>
-            Jumlah Spesimen tanaman hidup : 0
+            Jumlah Spesimen tanaman hidup : {totalHidup}
           </div>
           <div>
-            Jumlah Spesimen tanaman mati : 0
+            Jumlah Spesimen tanaman mati : {totalMati}
           </div>
           <div>
-            <b>Jumlah total spesimen tertanam : 0 </b>
+            Jumlah Spesimen tanaman sakit : {totalSakit}
+          </div>
+          <div>
+            <b>Jumlah total spesimen tertanam : {totalHidup+totalMati+totalSakit} </b>
           </div>
           <div>
             Indeterminate : 0
@@ -128,10 +138,10 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
             Gendub : 0
           </div>
           <div>
-            Genus : 1
+            Genus : {new Set(props.data.species.map((item) => item.famili.genus)).size} ( {new Set(props.data.species.map((item) => item.famili.genus))} )
           </div>
           <div>
-            Spesies : 1
+            Spesies : {props.data.species.length}
           </div>
           <div>
             Masih sp. : 0

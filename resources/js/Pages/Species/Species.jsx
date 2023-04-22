@@ -3,13 +3,17 @@ import { Head, useForm } from '@inertiajs/react';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from 'primereact/button';
 import { Link } from '@inertiajs/react';
-
+import { read, utils, writeFileXLSX } from 'xlsx';
+import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
+import InputLabel from '@/Components/InputLabel';
 
 export default function Species(props) {
   const [loading, setLoading] = useState(false);
+  const [exportVisible, setExportVisible] = useState(false);
   const [filters, setFilters] = useState({
     access_number: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -18,7 +22,40 @@ export default function Species(props) {
     collection_origin: { value: null, matchMode: FilterMatchMode.CONTAINS },
     planting_date: { value: null, matchMode: FilterMatchMode.CONTAINS },
   })
-  console.log(props);
+  const [filteredData, setFilteredData] = useState();
+  const [listAsalKoleksi, setListAsalKoleksi] = useState('Semua');
+  const [filterByAsal, setFilterByAsal] = useState('Semua');
+  const [filterByCara, setFilterByCara] = useState('Semua');
+  
+
+  useEffect(() => {
+    setListAsalKoleksi([
+      filterByAsal,...new Set(props.species.map((obj) => obj.collection_origin)),
+    ]);
+    
+
+    const items = props.species.map((item) => ({
+      'Nomor Koleksi' : item.collection_number,
+      'Nomor Akses' : item.access_number,
+      'Nomor Kolektor' : item.collector_number,
+      'Nama Spesies' : item.famili.genus + ' ' + item.name,
+      'Nama Lokal' : item.local_name,
+      'Famili' : item.famili.name,
+      'Tanggal Tanam' : item.planting_date,
+      'Asal Koleksi' : item.collection_origin,
+      'Jumlah di Pembibitan' : item.amount_in_nurseries,
+      'Jumlah di Lapangan' : item.amount_in_field,
+      'Total' : item.total,
+      'Marga' : item.genus_exist,
+      'Jenis' : item.type_exist,
+      'sp' : item.sp_exist,
+      'Lokasi Tanam' : item.planting_coordinate,
+      'Cara Mendapatkan': item.way_to_collect,
+    }));
+
+    setFilteredData(items);
+    
+  }, [loading])
 
   const {
     data,
@@ -31,13 +68,51 @@ export default function Species(props) {
 
   });
 
+  const exportExcel = useCallback(() => {
+    console.log(filterByAsal, filterByCara)
+    console.log(filteredData.filter((item) => {
+      if (filterByAsal == 'Semua' && filterByCara == 'Semua') {
+        console.log(item['Asal Koleksi']);
+        return true;
+      } else if (filterByAsal != 'Semua' && filterByCara == 'Semua') {
+        console.log(item['Asal Koleksi']);
+        return item['Asal Koleksi'].includes(filterByAsal);
+      } else if (filterByAsal == 'Semua' && filterByCara != 'Semua') {
+        console.log(item['Cara Mendapatkan']);
+        return item['Cara Mendapatkan'].includes(filterByCara);
+      } else {
+        return item['Asal Koleksi'].includes(filterByAsal) && item['Cara Mendapatkan'].includes(filterByCara)
+      }
+      return false;
+    }))
+    const ws = utils.json_to_sheet(filteredData.filter((item) => {
+      if (filterByAsal == 'Semua' && filterByCara == 'Semua') {
+        console.log(item['Asal Koleksi']);
+        return true;
+      } else if (filterByAsal != 'Semua' && filterByCara == 'Semua') {
+        console.log(item['Asal Koleksi']);
+        return item['Asal Koleksi'].includes(filterByAsal);
+      } else if (filterByAsal == 'Semua' && filterByCara != 'Semua') {
+        return item['Cara Mendapatkan'].includes(filterByCara);
+      } else {
+        return item['Asal Koleksi'].includes(filterByAsal) && item['Cara Mendapatkan'].includes(filterByCara)
+      }
+      return false;
+    }));
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, "Data");
+    writeFileXLSX(wb, "exportExcel.xlsx");
+  }, [filteredData, filterByAsal, filterByCara])
+
   const renderHeader = () => {
     return (
       <div className="flex justify-item-end">
         <Link href={route('species.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
-
+        <div className="ml-4">
+          <Button onClick={() => setExportVisible(true)} icon="pi pi-file-excel" label="Export Excel"/>
+        </div>
       </div>
     );
   };
@@ -64,6 +139,8 @@ export default function Species(props) {
     </div>;
   }
 
+  
+
   return (
     <AdminLayout>
       <Head title="species" />
@@ -85,6 +162,23 @@ export default function Species(props) {
           <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '15rem' }} />
         </DataTable>
       </div>
+      <Dialog header={'Export data spesies'} visible={exportVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setExportVisible(false)}>
+        <div className="mt-4">
+          <InputLabel htmlFor="name" value="Filter Asal Koleksi" />
+
+          <Dropdown value={filterByAsal} onChange={(e) => {setFilterByAsal(e.value)}} options={listAsalKoleksi} 
+            placeholder="Select a Famili" className="w-full md:w-14rem" />
+        </div>
+        <div className="mt-4">
+          <InputLabel htmlFor="wayToCollect" value="Filter Cara Mendapatkan" />
+
+          <Dropdown value={filterByCara} onChange={(e) => setFilterByCara(e.value)} options={['Semua', 'hibah' ,'eksplorasi' ,'pertukaran' ]}
+            placeholder="Select status" className="w-full md:w-14rem" />
+        </div>
+        <div className="mt-4">
+          <Button onClick={exportExcel} label="Export"/>
+        </div>
+      </Dialog>
     </AdminLayout>
   )
 }

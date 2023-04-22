@@ -190,7 +190,9 @@ export default function AddSpecies(props) {
             </div>
             <div>
               <label className="font-medium text-sm text-gray-700">
-                {props.species.collection_number}
+                {props.species.collection_number}{
+                  props.species.plant.length > 0 ? '-'+props.species.plant.map((item) => ' '+props.species.collection_number+item.access_number) : ''
+                }
               </label>
             </div>
           </div>

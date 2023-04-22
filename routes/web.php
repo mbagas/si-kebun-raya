@@ -38,13 +38,16 @@ Route::get('/dashboard', function () {
 
 Route::get('/guest', [GuestController::class, 'index'])->name('guest');
 
-Route::resource('species', SpeciesController::class)->only(['show']);
+
 
 Route::middleware('auth')->group(function () {
     Route::resource('user', UsersController::class);
     Route::resource('families', FamiliesController::class);
     Route::resource('plots', PlotsController::class);
-    Route::resource('species', SpeciesController::class)->only(['index','create','edit','store','update','destroy']);
+    
+    Route::resource('species', SpeciesController::class)->only(['create']);
+    Route::resource('species', SpeciesController::class)->except(['show']);
+    
     Route::resource('plants', PlantsController::class);
 
     Route::get('/buku-kebun', [BukuKebunController::class, 'index'])->name('buku_kebun');
@@ -53,6 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('species', SpeciesController::class)->only(['show']);
 
 
 
