@@ -8,6 +8,7 @@ use App\Http\Controllers\PlotsController;
 use App\Http\Controllers\PlantsController;
 use App\Http\Controllers\BukuKebunController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\DataRequestsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,21 +24,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/guest', [GuestController::class, 'index'])->name('guest');
-
+Route::get('/', [GuestController::class, 'index'])->name('guest');
 
 
 Route::middleware('auth')->group(function () {
@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('species', SpeciesController::class)->only(['show']);
+Route::resource('data-request', DataRequestsController::class)->only(['create','store']);
 
 
 

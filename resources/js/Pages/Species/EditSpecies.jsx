@@ -155,7 +155,7 @@ export default function AddSpecies(props) {
           <InputLabel htmlFor="familyId" value="Famili" />
 
           <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={families} optionLabel="name"
-            placeholder="Select a Famili" className="w-full md:w-14rem" />
+            placeholder="Select a Famili" filter className="w-full md:w-14rem" />
 
           <InputError message={errors.familyId} className="mt-2" />
         </div>
@@ -164,7 +164,7 @@ export default function AddSpecies(props) {
           <InputLabel htmlFor="plotId" value="Petak" />
 
           <Dropdown value={data.plotId} optionValue="id" onChange={(e) => setData('plotId', e.value)} options={props.plots} optionLabel="name"
-            placeholder="Select a Petak" className="w-full md:w-14rem" />
+            placeholder="Select a Petak" filter className="w-full md:w-14rem" />
 
           <InputError message={errors.plotId} className="mt-2" />
         </div>
