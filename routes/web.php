@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', [GuestController::class, 'index'])->name('guest');
-
+Route::resource('data-request', DataRequestsController::class)->only(['create', 'store']);
 
 Route::middleware('auth')->group(function () {
     Route::resource('user', UsersController::class);
@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('plants', PlantsController::class);
 
+    Route::resource('data-request', DataRequestsController::class)->except(['create','store']);
+
     Route::get('/buku-kebun', [BukuKebunController::class, 'index'])->name('buku_kebun');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,7 +60,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('species', SpeciesController::class)->only(['show']);
-Route::resource('data-request', DataRequestsController::class)->only(['create','store']);
+
 
 
 

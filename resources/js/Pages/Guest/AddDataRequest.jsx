@@ -18,7 +18,7 @@ export default function AddDataRequest(props) {
     email: '',
     institute: '',
     familyId: '',
-    spesiesId: '',
+    speciesId: '',
     reason: '',
     token: '',
     filterBy: 'famili'
@@ -36,7 +36,7 @@ export default function AddDataRequest(props) {
     post(route('data-request.store'), {
       onFinish: () => {
         reset();
-        toast.current.show({ severity: 'success', summary: 'Data Request Submitted' });
+        toast.current.show({ severity: 'success', summary: 'Data Request Submitted', detail: 'Token akan dikirim melalui email.' });
       }
     });
   }
@@ -73,8 +73,11 @@ export default function AddDataRequest(props) {
         <div>
           <div>
             <h2 className="text-xl">
-              Isi data berikut untuk melakukan permintaan data
+              Isi data berikut untuk melakukan permintaan data.
             </h2>
+            <label>
+              Setelah permintaan divalidasi, token akan dikirimkan melalui email.
+            </label>
           </div>
           <form onSubmit={submit}>
             <Toast ref={toast} />
@@ -150,7 +153,7 @@ export default function AddDataRequest(props) {
               <InputError message={errors.familyId} className="mt-2" />
             </div>
             <div className="mt-4">
-              <InputLabel htmlFor="familyId" value="Famili" />
+              <InputLabel htmlFor="familyId" value="Spesies" />
 
               <MultiSelect value={data.speciesId} optionValue="id" onChange={(e) => setData('speciesId', e.value)} options={props.species} optionLabel="name"
                 placeholder="Select Species" filter display="chip"  maxSelectedLabels={3} className="w-full md:w-14rem" />

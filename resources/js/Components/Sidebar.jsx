@@ -119,7 +119,7 @@ export default function Sidebar({ children }) {
                 </li>
                 <li className="rounded-sm">
                   <Link
-                    href={route('plots.index')}
+                    href={route('data-request.index')}
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
                     <i className="pi pi-send" style={{ color: 'white', fontSize: '1.5rem' }}></i>

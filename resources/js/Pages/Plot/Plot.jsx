@@ -34,7 +34,6 @@ export default function Plot(props) {
         <Link href={route('plots.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
-
       </div>
     );
   };

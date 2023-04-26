@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DataRequests extends Model
@@ -26,8 +27,12 @@ class DataRequests extends Model
     return $this->BelongsTo(Families::class, 'family_id');
   }
 
-  public function species(): BelongsTo
+  // public function species(): BelongsTo
+  // {
+  //   return $this->BelongsTo(Species::class, 'species_id');
+  // }
+  public function species(): BelongsToMany
   {
-    return $this->BelongsTo(Species::class, 'species_id');
+    return $this->BelongsToMany(Species::class, 'species_id');
   }
 }

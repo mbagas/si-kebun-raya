@@ -16,6 +16,10 @@ class DataRequestsController extends Controller
   public function index()
   {
     //
+    $dataRequest = DataRequests::all();
+    return Inertia::render('DataRequest/DataRequest',[
+      'dataRequest' => $dataRequest->load('famili','species'),
+    ]);
   }
 
   /**
@@ -42,7 +46,7 @@ class DataRequestsController extends Controller
       'name' => 'required|string|max:255',
       'email' => 'required|string|max:255',
       'institute' => 'required|string|max:255',
-      'familyId' => 'integer|max:255',
+      'familyId' => 'integer|max:255|nullable',
       'reason' => 'required|string',
       'filterBy' => 'required|string',
     ]);
@@ -61,7 +65,7 @@ class DataRequestsController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'institute' => $request->institute,
-        'species_id' => $request->speciesId,
+        'species_id' => json_encode($request->speciesId),
         'reason' => $request->reason,
         'status' => 'pending'
       ]);
@@ -76,6 +80,7 @@ class DataRequestsController extends Controller
   public function show(DataRequests $dataRequests)
   {
     //
+
   }
 
   /**
