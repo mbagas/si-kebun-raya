@@ -69,7 +69,7 @@ export default function AddDataRequest(props) {
           </div>
         </div>
 
-        
+
         <div>
           <div>
             <h2 className="text-xl">
@@ -135,7 +135,7 @@ export default function AddDataRequest(props) {
 
               <div className="flex flex-wrap gap-3">
                 <div className="flex align-items-center">
-                  <RadioButton inputId="filterBy1" name="filterBy" value="famili" onChange={(e) => setData('filterBy',e.value)} checked={data.filterBy === 'famili'} />
+                  <RadioButton inputId="filterBy1" name="filterBy" value="famili" onChange={(e) => setData('filterBy', e.value)} checked={data.filterBy === 'famili'} />
                   <label htmlFor="filterBy1" className="ml-2">Famili</label>
                 </div>
                 <div className="flex align-items-center">
@@ -144,22 +144,27 @@ export default function AddDataRequest(props) {
                 </div>
               </div>
             </div>
-            <div className="mt-4"> 
-              <InputLabel htmlFor="familyId" value="Famili" />
+            {data.filterBy == 'famili' ?
+              (<div className="mt-4">
+                <InputLabel htmlFor="familyId" value="Famili" />
 
-              <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={props.families} optionLabel="name"
-                placeholder="Select a Famili" filter className="w-full md:w-14rem" />
+                <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={props.families} optionLabel="name"
+                  placeholder="Select a Famili" filter className="w-full md:w-14rem" />
 
-              <InputError message={errors.familyId} className="mt-2" />
-            </div>
-            <div className="mt-4">
-              <InputLabel htmlFor="familyId" value="Spesies" />
+                <InputError message={errors.familyId} className="mt-2" />
+              </div>) :
+              (<div className="mt-4">
+                <InputLabel htmlFor="familyId" value="Spesies" />
 
-              <MultiSelect value={data.speciesId} optionValue="id" onChange={(e) => setData('speciesId', e.value)} options={props.species} optionLabel="name"
-                placeholder="Select Species" filter display="chip"  maxSelectedLabels={3} className="w-full md:w-14rem" />
-              
-              <InputError message={errors.familyId} className="mt-2" />
-            </div>
+                <MultiSelect value={data.speciesId} optionValue="id" onChange={(e) => setData('speciesId', e.value)} options={props.species} optionLabel="name"
+                  placeholder="Select Species" filter display="chip" maxSelectedLabels={3} className="w-full md:w-14rem" />
+
+                <InputError message={errors.familyId} className="mt-2" />
+              </div>)
+
+            }
+
+
             <div>
               <InputLabel htmlFor="reason" value="Alasan" />
 

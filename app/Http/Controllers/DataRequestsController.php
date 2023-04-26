@@ -18,7 +18,7 @@ class DataRequestsController extends Controller
     //
     $dataRequest = DataRequests::all();
     return Inertia::render('DataRequest/DataRequest',[
-      'dataRequest' => $dataRequest->load('famili','species'),
+      'dataRequest' => $dataRequest->load('famili','species','species.famili','species.plot'),
     ]);
   }
 
@@ -65,10 +65,11 @@ class DataRequestsController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'institute' => $request->institute,
-        'species_id' => json_encode($request->speciesId),
+        // 'species_id' => json_encode($request->speciesId),
         'reason' => $request->reason,
         'status' => 'pending'
       ]);
+      $dataRequest->species()->attach($request->speciesId);
     }
 
     return to_route('data-request.create')->with('message', 'Data Request Successfully');

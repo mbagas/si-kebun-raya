@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -70,6 +71,11 @@ class Species extends Model
   public function plant(): HasMany
   {
     return $this->hasMany(Plants::class, 'species_id');
+  }
+
+  public function dataRequest(): BelongsToMany
+  {
+    return $this->BelongsToMany(DataRequests::class, 'data_requests_species', 'species_id', 'data_request_id');
   }
 
   

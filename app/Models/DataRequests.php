@@ -33,6 +33,6 @@ class DataRequests extends Model
   // }
   public function species(): BelongsToMany
   {
-    return $this->BelongsToMany(Species::class, 'species_id');
+    return $this->BelongsToMany(Species::class, 'data_requests_species','data_request_id', 'species_id');
   }
 }
