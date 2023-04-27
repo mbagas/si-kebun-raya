@@ -39,7 +39,7 @@ class PlantsController extends Controller
     ]);
 
     if(is_file($request->image)) {
-      $fileName = $request->accessNumber . '_' . $request->coordinate . '.' . $request->image->extension();
+      $fileName = $request->speciesId . '_' . $request->accessNumber . '.' . $request->image->extension();
       $request->image->move(public_path('plantPhoto'), $fileName);
 
       $plant = Plants::create([

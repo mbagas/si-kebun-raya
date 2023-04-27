@@ -17,7 +17,7 @@ export default function DataRequest(props) {
   console.log(props);
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
-      <Link href={route('data-request.edit', rowData.id)}><Button icon="pi pi-eye" severity="success" /></Link>
+      <Link href={route('data-request.show', rowData.id)}><Button icon="pi pi-eye" severity="success" /></Link>
     </div>;
   }
 

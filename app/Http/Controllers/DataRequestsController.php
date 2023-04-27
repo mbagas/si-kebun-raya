@@ -78,10 +78,13 @@ class DataRequestsController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(DataRequests $dataRequests)
+  public function show(DataRequests $data_request)
   {
     //
-
+    // dd($data_request->load('famili', 'species', 'species.famili', 'species.plot'));
+    return Inertia::render('DataRequest/DetailDataRequest', [
+      'dataRequest' => $data_request->load('famili','species','species.famili','species.plot'),
+    ]);
   }
 
   /**
