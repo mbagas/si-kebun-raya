@@ -42,32 +42,38 @@ export default function AddDataRequest(props) {
   }
   return (
     <GuestsLayout>
-      <div className="grid grid-rows justify-items-center gap-y-10">
-        <div>
-          <h2 className="text-2xl font-semibold">
-            Data Request
-          </h2>
-        </div>
-        <div className="grid grid-rows-2 gap-y-4 ">
+      <div>
+        <div className="flex justify-center">
           <div>
-            <InputLabel htmlFor="genus" value="Masukan token untuk mengunduh data" />
-            <TextInput
-              id="token"
-              name="token"
-              value={data.token}
-              className="mt-1 block w-96"
-              autoComplete="Masukan token untuk mengunduh data"
-              isFocused={true}
-              onChange={handleOnChange}
-              required
-            />
+            <div>
+              <h2 className="text-2xl font-semibold">
+                Data Request
+              </h2>
+            </div>
+            <div className="grid grid-rows-2 gap-y-4 ">
+              <div>
+                <InputLabel htmlFor="genus" value="Masukan token untuk mengunduh data" />
+                <TextInput
+                  id="token"
+                  name="token"
+                  value={data.token}
+                  className="mt-1 block w-full md:w-96"
+                  autoComplete="Masukan token untuk mengunduh data"
+                  isFocused={true}
+                  onChange={handleOnChange}
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-center">
+                <PrimaryButton className="ml-4" disabled={''}>
+                  Get Data
+                </PrimaryButton>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center justify-center">
-            <PrimaryButton className="ml-4" disabled={''}>
-              Get Data
-            </PrimaryButton>
-          </div>
+          
         </div>
+        
 
 
         <div>
@@ -165,10 +171,10 @@ export default function AddDataRequest(props) {
             }
 
 
-            <div>
+            <div className="mt-4">
               <InputLabel htmlFor="reason" value="Alasan" />
 
-              <InputTextarea name="reason" autoResize value={data.reason} onChange={handleOnChange} rows={5} cols={90} />
+              <InputTextarea className="w-full" name="reason" autoResize value={data.reason} onChange={handleOnChange} rows={5} cols={90} />
 
               <InputError message={errors.reason} className="mt-2" />
             </div>

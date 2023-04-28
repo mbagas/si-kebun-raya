@@ -7,6 +7,36 @@ import React, { useState, useRef, useCallback } from "react";
 
 export default function DetailDataRequest(props) {
   const [loading, setLoading] = useState(false);
+  const {data, setData, patch, reset, errors} = useForm({
+    id: props.dataRequest.id,
+    name: props.dataRequest.name,
+    email: props.dataRequest.email,
+    institute: props.dataRequest.institute,
+    family_id: props.dataRequest.family_id,
+    species_id: props.dataRequest.species_id,
+    status: props.dataRequest.status,
+    reason: props.dataRequest.reason,
+  });
+
+  const dataRequestValidate = () => {
+    setLoading(true);
+
+    setData('status','Diterima');
+    patch(route('data-request.update', props.dataRequest.id), {
+      preserveScroll: true,
+      onSuccess: () => setLoading(false),
+    });
+  };
+
+  const dataRequestReject = () => {
+    setLoading(true);
+
+    setData('status','Ditolak');
+    patch(route('data-request.update', props.dataRequest.id), {
+      preserveScroll: true,
+      onSuccess: () => setLoading(false),
+    });
+  }
   console.log(props);
   return (
     <AdminLayout>
@@ -116,10 +146,10 @@ export default function DetailDataRequest(props) {
       </div>
       <div className="grid grid-cols-2 gap-x-4 mt-10 justify-items-start">
         <div className="justify-self-center md:justify-self-end">
-          <Button type="button" label="Validasi" severity="success" />
+          <Button type="button" onClick={dataRequestValidate} label="Validasi" severity="success" />
         </div>
         <div className="justify-self-center md:justify-self-start">
-          <Button type="button" outlined label="Tidak di Validasi" severity="danger" />
+          <Button type="button" onClick={dataRequestReject} outlined label="Tolak" severity="danger" />
         </div>
       </div>
     </AdminLayout>

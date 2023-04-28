@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Notifications\Notification;
 use App\Models\DataRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Species;
 use App\Models\Families;
+use App\Notifications\DataRequestEmail;
 
 class DataRequestsController extends Controller
 {
@@ -44,7 +46,7 @@ class DataRequestsController extends Controller
     //
     $request->validate([
       'name' => 'required|string|max:255',
-      'email' => 'required|string|max:255',
+      'email' => 'required|email|string|max:255',
       'institute' => 'required|string|max:255',
       'familyId' => 'integer|max:255|nullable',
       'reason' => 'required|string',
@@ -90,7 +92,7 @@ class DataRequestsController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(DataRequests $dataRequests)
+  public function edit(DataRequests $data_request)
   {
     //
   }
@@ -98,9 +100,45 @@ class DataRequestsController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, DataRequests $dataRequests)
+  public function update(Request $request, DataRequests $data_request)
   {
     //
+
+    
+    if($request->status == "Diterima") {
+      $get_random_string = md5(microtime());
+      $project = [
+        'greeting' => 'Hi ' . $request->name . ',',
+        'body' => 'Permintaan data tumbuhan anda diterima. Silahkan gunakan kode ini untuk mengunduh data tumbuhan yang anda butuhkan.',
+        'result' => $get_random_string,
+        'thanks' => 'Terima Kasih',
+        'actionText' => 'Buka Web Kebun Raya ITERA',
+        'actionURL' => url('/'),
+      ];
+      $data_request->update([
+        'status' => $request->status,
+        'token' => $get_random_string,
+      ]);
+    } else if ($request->status == "Ditolak") {
+      $project = [
+        'greeting' => 'Hi ' . $request->name . ',',
+        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan tertentu.',
+        'result' => 'TIDAK DI TERIMA',
+        'thanks' => 'Terima Kasih',
+        'actionText' => 'Buka Web Kebun Raya ITERA',
+        'actionURL' => url('/'),
+      ];
+      $data_request->update([
+        'status' => $request->status,
+        'token' => null,
+      ]);
+    };
+    
+    $data_request->notify(new DataRequestEmail($project));
+    
+
+    return to_route('data-request.index')->with('message', 'Validation Successfully');
+
   }
 
   /**
