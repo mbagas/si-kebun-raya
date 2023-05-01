@@ -38,6 +38,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', [GuestController::class, 'index'])->name('guest');
+Route::get('/data-request/getdata', [GuestController::class, 'filterByToken'])->name('dataFilteredByToken');
 Route::resource('data-request', DataRequestsController::class)->only(['create', 'store']);
 
 Route::middleware('auth')->group(function () {

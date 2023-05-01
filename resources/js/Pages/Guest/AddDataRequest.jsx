@@ -1,5 +1,5 @@
 import { GuestsLayout } from "@/Layouts/GuestsLayout";
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -10,6 +10,8 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { RadioButton } from 'primereact/radiobutton';
 import { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
+import { useEffect } from "react";
+import { read, utils, writeFileXLSX } from 'xlsx';
 
 export default function AddDataRequest(props) {
   const toast = useRef(null);
@@ -23,7 +25,51 @@ export default function AddDataRequest(props) {
     token: '',
     filterBy: 'famili'
   });
+  const [token,setToken] = useState();
   console.log(props);
+
+  useEffect(() => {
+    if (props.status == '200') {
+      toast.current.show({ severity: 'success', summary: 'Token ditemukan' });
+      let items =[]
+      if(props.dataRequest.family_id != null){
+        items = props.dataRequest.famili.species.map((item) => ({
+          'Nomor Kolektor': item.collector_number,
+          'Nama Spesies': item.famili.genus + ' ' + item.name,
+          'Nama Lokal': item.local_name,
+          'Famili': item.famili.name,
+          'Tanggal Tanam': item.planting_date,
+          'Asal Koleksi': item.collection_origin,
+          'Jumlah di Pembibitan': item.amount_in_nurseries,
+          'Jumlah di Lapangan': item.amount_in_field,
+          'Total': item.total,
+          'Lokasi Tanam': item.planting_coordinate,
+          'Cara Mendapatkan': item.way_to_collect,
+        }));
+      } else if(species_id != null){
+        items = props.dataRequest.species.map((item) => ({
+          'Nomor Kolektor': item.collector_number,
+          'Nama Spesies': item.famili.genus + ' ' + item.name,
+          'Nama Lokal': item.local_name,
+          'Famili': item.famili.name,
+          'Tanggal Tanam': item.planting_date,
+          'Asal Koleksi': item.collection_origin,
+          'Jumlah di Pembibitan': item.amount_in_nurseries,
+          'Jumlah di Lapangan': item.amount_in_field,
+          'Total': item.total,
+          'Lokasi Tanam': item.planting_coordinate,
+          'Cara Mendapatkan': item.way_to_collect,
+        }));
+      }
+
+      const ws = utils.json_to_sheet(items);
+      const wb = utils.book_new();
+      utils.book_append_sheet(wb, ws, "Data");
+      writeFileXLSX(wb, 'exportDataTumbuhan.xlsx');
+    } else if (props.status == '204') {
+      toast.current.show({ severity: 'error', summary: 'Token tidak ditemukan' });
+    }
+  },[])
 
   const handleOnChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
@@ -39,6 +85,21 @@ export default function AddDataRequest(props) {
         toast.current.show({ severity: 'success', summary: 'Data Request Submitted', detail: 'Token akan dikirim melalui email.' });
       }
     });
+  }
+
+  const getRequestedData = (e) => {
+    router.get(route('dataFilteredByToken', {'token':token}),{
+      onSuccess: (data) => {
+        console.log(data);
+        if(data.status == '200'){
+          setRequestedData(data.dataRequest)
+          toast.current.show({ severity: 'success', summary: 'Token ditemukan' });
+          console.log(data);
+        } else {
+          toast.current.show({ severity: 'error', summary: 'Token tidak ditemukan' });
+        }
+      }
+    })
   }
   return (
     <GuestsLayout>
@@ -56,16 +117,16 @@ export default function AddDataRequest(props) {
                 <TextInput
                   id="token"
                   name="token"
-                  value={data.token}
+                  value={token}
                   className="mt-1 block w-full md:w-96"
                   autoComplete="Masukan token untuk mengunduh data"
                   isFocused={true}
-                  onChange={handleOnChange}
+                  onChange={(e)=>setToken(e.target.value)}
                   required
                 />
               </div>
               <div className="flex items-center justify-center">
-                <PrimaryButton className="ml-4" disabled={''}>
+                <PrimaryButton className="ml-4" disabled={''} onClick={getRequestedData}>
                   Get Data
                 </PrimaryButton>
               </div>
@@ -73,8 +134,6 @@ export default function AddDataRequest(props) {
           </div>
           
         </div>
-        
-
 
         <div>
           <div>

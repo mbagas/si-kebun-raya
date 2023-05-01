@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Families;
+use App\Models\DataRequests;
 use Illuminate\Http\Request;
 use App\Models\Species;
 use Inertia\Inertia;
@@ -20,4 +21,19 @@ class GuestController extends Controller
         'families' => $famili,
       ]);
     }
+
+  public function filterByToken(Request $request)
+  {
+    $dataRequest = DataRequests::where('status','Diterima')->where('token', $request->token)->first();
+    if ($dataRequest) {
+      return Inertia::render('Guest/AddDataRequest', [
+        'dataRequest' => $dataRequest->load('famili','famili.species', 'famili.species.plot', 'famili.species.famili','species','species.famili','species.plot'),
+        'status' => '200'
+      ]);
+    } else {
+      return Inertia::render('Guest/AddDataRequest', [
+        'status' => '204'
+      ]);
+    }
+  }
 }

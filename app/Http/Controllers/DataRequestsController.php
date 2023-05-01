@@ -60,7 +60,7 @@ class DataRequestsController extends Controller
         'institute' => $request->institute,
         'family_id' => $request->familyId,
         'reason' => $request->reason,
-        'status' => 'pending'
+        'status' => 'Pending'
       ]);
     } else if ($request->filterBy == 'species') {
       $dataRequest = DataRequests::create([
@@ -69,7 +69,7 @@ class DataRequestsController extends Controller
         'institute' => $request->institute,
         // 'species_id' => json_encode($request->speciesId),
         'reason' => $request->reason,
-        'status' => 'pending'
+        'status' => 'Pending'
       ]);
       $dataRequest->species()->attach($request->speciesId);
     }
@@ -148,4 +148,6 @@ class DataRequestsController extends Controller
   {
     //
   }
+
+  
 }

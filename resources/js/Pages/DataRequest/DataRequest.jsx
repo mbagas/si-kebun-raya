@@ -13,6 +13,7 @@ export default function DataRequest(props) {
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
     email: { value: null, matchMode: FilterMatchMode.CONTAINS },
     institute: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    status: { value: null, matchMode: FilterMatchMode.CONTAINS },
   })
   console.log(props);
   const actionTemplate = (rowData, column) => {
@@ -35,6 +36,7 @@ export default function DataRequest(props) {
           <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
           <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
           <Column field="institute" header="Institusi" filter filterPlaceholder="Search by institute" sortable style={{ minWidth: '12rem' }} />
+          <Column field="status" header="Status" filter filterPlaceholder="Search by status" sortable style={{ minWidth: '12rem' }} />
           <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
         </DataTable>
       </div>
