@@ -35,6 +35,7 @@ export default function AddSpecies(props) {
     speciesId: props.species.id,
     image: '',
     planter: '',
+    planting_date: '',
   });
 
   const handleOnChange = (event) => {
@@ -80,6 +81,7 @@ export default function AddSpecies(props) {
       speciesId: props.species.id,
       image: '',
       planter: '',
+      planting_date: '',
     });
     setFormVisible(true);
   }
@@ -95,6 +97,7 @@ export default function AddSpecies(props) {
       speciesId: rowData.species_id,
       image: '',
       planter: rowData.planter ? rowData.planter : '',
+      planting_date: rowData.planting_date ? rowData.planting_date : '',
       _method: 'patch',
     });
 
@@ -514,6 +517,15 @@ export default function AddSpecies(props) {
                 />
 
                 <InputError message={errors.planter} className="mt-2" />
+              </div>
+
+              <div className="mt-4">
+                <InputLabel htmlFor="plantingDate" value="Tanggal Tanam" />
+
+                {/* <Calendar value={data.plantingDate} onChange={(e) => setData('plantingDate', new Date('Y-m-d H:i:s',e.value))} dateFormat="yy-mm-dd" /> */}
+                <Calendar value={new Date(data.plantingDate)} onChange={(e) => setData('plantingDate', e.value)} dateFormat="yy-mm-dd" />
+
+                <InputError message={errors.name} className="mt-2" />
               </div>
 
               <div className="flex items-center justify-end mt-4">

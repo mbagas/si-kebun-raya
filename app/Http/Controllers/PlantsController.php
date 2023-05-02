@@ -49,6 +49,7 @@ class PlantsController extends Controller
         'status' => $request->status,
         'image' => $fileName,
         'planter' => $request->planter,
+        'planting_date' => $request->plantingDate,
       ]);
     } else {
       $plant = Plants::create([
@@ -57,6 +58,7 @@ class PlantsController extends Controller
         'coordinate' => $request->coordinate,
         'status' => $request->status,
         'planter' => $request->planter,
+        'planting_date' => $request->plantingDate,
       ]);
     }
     if($plant->species_id) {
@@ -98,6 +100,7 @@ class PlantsController extends Controller
       'speciesId' => 'required',
       'coordinate' => 'required|string',
       'status' => 'required|string',
+      'plantingDate' => 'required'
     ]);
     
 
@@ -119,6 +122,7 @@ class PlantsController extends Controller
         'status' => $request->status,
         'image' => $fileName,
         'planter' => $request->planter,
+        'planting_date' => $request->plantingDate,
       ]);
     } else {
       $plant ->update([
@@ -127,6 +131,7 @@ class PlantsController extends Controller
         'coordinate' => $request->coordinate,
         'status' => $request->status,
         'planter' => $request->planter,
+        'planting_date' => $request->plantingDate,
       ]);
     }
     
