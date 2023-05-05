@@ -46,7 +46,6 @@ class FamiliesController extends Controller
 
         $famili = Families::create([
           'name' => $request->name,
-          'genus' => $request->genus,
         ]);
 
     return to_route('families.index')->with('message', 'User has been created successfully');
@@ -81,7 +80,6 @@ class FamiliesController extends Controller
         // dd($request);
         $family->update([
           'name' => $request->name,
-          'genus' => $request->genus,
         ]);
 
         return to_route('families.index')->with('message', 'Update Successfully');

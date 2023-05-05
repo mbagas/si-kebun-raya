@@ -17,6 +17,7 @@ return new class extends Migration
           $table->string('access_number')->nullable();
           $table->string('collector_number')->nullable();
           $table->string('name')->nullable();
+          $table->string('genus')->nullable();
           $table->string('local_name')->nullable();
           $table->bigInteger('family_id')->nullable();
           $table->bigInteger('plot_id')->nullable();

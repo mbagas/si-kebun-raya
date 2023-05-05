@@ -21,6 +21,7 @@ export default function AddSpecies(props) {
     accessNumber: '',
     collectorNumber: '',
     name: '',
+    genus: '',
     localName: '',
     familyId: '',
     plotId: '',
@@ -47,13 +48,7 @@ export default function AddSpecies(props) {
 
     post(route('species.store'));
   };
-  let families = props.families.map(obj => {
-    const famili = {
-      name: obj.name+' - '+obj.genus,
-      id: obj.id,
-    }
-    return famili;
-  });
+
   console.log(data);
   return (
     <AdminLayout>
@@ -111,6 +106,21 @@ export default function AddSpecies(props) {
           <InputError message={errors.collectorNumber} className="mt-2" />
         </div>
         <div>
+          <InputLabel htmlFor="name" value="Genus" />
+
+          <TextInput
+            id="genus"
+            name="genus"
+            value={data.genus}
+            className="mt-1 block w-full"
+            autoComplete="username"
+            onChange={handleOnChange}
+            required
+          />
+
+          <InputError message={errors.name} className="mt-2" />
+        </div>
+        <div>
           <InputLabel htmlFor="name" value="Nama Spesies" />
 
           <TextInput
@@ -126,6 +136,8 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.name} className="mt-2" />
         </div>
+        
+        
         <div>
           <InputLabel htmlFor="localName" value="Nama Lokal Spesies" />
 
@@ -145,7 +157,7 @@ export default function AddSpecies(props) {
         <div>
           <InputLabel htmlFor="familyId" value="Famili" />
 
-          <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={families} optionLabel="name"
+          <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={props.families} optionLabel="name"
             placeholder="Select a Famili" className="w-full md:w-14rem" />
 
           <InputError message={errors.familyId} className="mt-2" />

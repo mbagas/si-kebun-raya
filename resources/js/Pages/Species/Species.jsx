@@ -38,7 +38,7 @@ export default function Species(props) {
       'Nomor Koleksi' : item.collection_number,
       'Nomor Akses' : item.access_number,
       'Nomor Kolektor' : item.collector_number,
-      'Nama Spesies' : item.famili.genus + ' ' + item.name,
+      'Nama Spesies' : item.genus + ' ' + item.name,
       'Nama Lokal' : item.local_name,
       'Famili' : item.famili.name,
       'Tanggal Tanam' : item.planting_date,

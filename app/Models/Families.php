@@ -12,7 +12,6 @@ class Families extends Model
   
   protected $fillable = [
     'name',
-    'genus',
   ];
   use HasFactory;
 

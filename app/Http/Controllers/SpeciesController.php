@@ -53,6 +53,7 @@ class SpeciesController extends Controller
       'accessNumber' => 'required|string|max:255|unique:species,access_number',
       'collectorNumber' => 'required|string|max:255',
       'name' => 'string|max:255',
+      'genus' => 'string|max:255',
       'localName' => 'string|max:255',
       'familyId' => 'required',
       'plotId' => 'required',
@@ -74,7 +75,7 @@ class SpeciesController extends Controller
     $user = Auth::user();
 
     if (is_file($request->image)) {
-      $fileName = $request->id . '_' . $request->accessNumber . '.' . $request->image->extension();
+      $fileName = $request->familyId . '_' . $request->accessNumber . '.' . $request->image->extension();
       $request->image->move(public_path('speciesPhoto'), $fileName);
 
       $species = Species::create([
@@ -82,6 +83,7 @@ class SpeciesController extends Controller
         'access_number' => $request->accessNumber,
         'collector_number' => $request->collectorNumber,
         'name' => $request->name,
+        'genus' => $request->genus,
         'local_name' => $request->localName,
         'family_id' => $request->familyId,
         'plot_id' => $request->plotId,
@@ -107,6 +109,7 @@ class SpeciesController extends Controller
         'access_number' => $request->accessNumber,
         'collector_number' => $request->collectorNumber,
         'name' => $request->name,
+        'genus' => $request->genus,
         'local_name' => $request->localName,
         'family_id' => $request->familyId,
         'plot_id' => $request->plotId,
@@ -180,6 +183,7 @@ class SpeciesController extends Controller
       'accessNumber' => 'required|string|max:255',
       'collectorNumber' => 'required|string|max:255',
       'name' => 'string|max:255',
+      'genus' => 'string|max:255',
       'localName' => 'string|max:255',
       'familyId' => 'required',
       'plotId' => 'required',
@@ -205,15 +209,16 @@ class SpeciesController extends Controller
         if (file_exists(public_path('speciesPhoto/' . $species->image[1]))) {
           unlink(public_path('speciesPhoto/' . $species->image[1]));
         }
-      } 
-      
-      $fileName = $request->accessNumber . '_' . $request->name . '.' . $request->image->extension();
+      }
+
+      $fileName = $request->familyId . '_' . $request->accessNumber . '.' . $request->image->extension();
       $request->image->move(public_path('speciesPhoto'), $fileName);
       $species->update([
         'collection_number' => $request->collectionNumber,
         'access_number' => $request->accessNumber,
         'collector_number' => $request->collectorNumber,
         'name' => $request->name,
+        'genus' => $request->genus,
         'local_name' => $request->localName,
         'family_id' => $request->familyId,
         'plot_id' => $request->plotId,
@@ -239,6 +244,7 @@ class SpeciesController extends Controller
         'access_number' => $request->accessNumber,
         'collector_number' => $request->collectorNumber,
         'name' => $request->name,
+        'genus' => $request->genus,
         'local_name' => $request->localName,
         'family_id' => $request->familyId,
         'plot_id' => $request->plotId,

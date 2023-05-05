@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('families', function (Blueprint $table) {
           $table->id();
           $table->string('name')->nullable();
-          $table->string('genus')->nullable();
           $table->timestamps();
         });
     }

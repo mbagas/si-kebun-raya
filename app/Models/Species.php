@@ -18,6 +18,7 @@ class Species extends Model
     'access_number',
     'collector_number',
     'name',
+    'genus',
     'local_name',
     'family_id',
     'plot_id',

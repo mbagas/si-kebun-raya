@@ -104,7 +104,7 @@ export default function DetailDataRequest(props) {
               </div>
               <div className="col-span-2">
                 <label className="font-medium text-sm text-gray-700">
-                  {props.dataRequest.species.famili.genus} {props.dataRequest.species.name}
+                  {props.dataRequest.species.genus} {props.dataRequest.species.name}
                 </label>
               </div>
             </div>

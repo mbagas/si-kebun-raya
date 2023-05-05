@@ -19,7 +19,7 @@ export default function Landing(props) {
         return props.species;
       }
       return props.species.filter((species) => {
-        return species.famili.name.toLowerCase().includes(filterData.toLowerCase()) || species.name.toLowerCase().includes(filterData.toLowerCase()) || species.famili.genus.toLowerCase().includes(filterData.toLowerCase());
+        return species.famili.name.toLowerCase().includes(filterData.toLowerCase()) || species.name.toLowerCase().includes(filterData.toLowerCase()) || species.genus.toLowerCase().includes(filterData.toLowerCase());
       });
     })
   }, [filterData]);
@@ -50,7 +50,7 @@ export default function Landing(props) {
                   </div>
                   <div className="h-auto justify-self-center text-center mb-4">
                     <h2 className="text-base font-semibold">
-                      {species.famili.genus} {species.name}
+                      {species.genus} {species.name}
                     </h2>
                     <h2 className="text-base">
                       {species.famili.name}

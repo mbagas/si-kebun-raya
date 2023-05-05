@@ -17,7 +17,7 @@ export default function DetailSpeciesGuest(props) {
             </div>
             <div className="h-auto justify-self-center text-center mb-4">
               <h2 className="text-base font-semibold">
-                {props.species.famili.genus} {props.species.name}
+                {props.species.genus} {props.species.name}
               </h2>
               <h2 className="text-base">
                 {props.species.famili.name}
@@ -47,7 +47,7 @@ export default function DetailSpeciesGuest(props) {
           </div>
           <div>
             <label className="font-medium text-sm text-gray-700">
-              {props.species.famili.genus} {props.species.name}
+              {props.species.genus} {props.species.name}
             </label>
           </div>
         </div>

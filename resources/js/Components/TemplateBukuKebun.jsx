@@ -81,7 +81,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                         }  </td>
                       <td className="border border-black p-1"> {species.collector_number} </td>
                       <td className="border border-black p-1"> {species.access_number} </td>
-                      <td className="border border-black p-1">{species.famili.genus} {species.name}; {species.famili.name}; didapatkan dari {species.way_to_collect}; 
+                      <td className="border border-black p-1">{species.genus} {species.name}; {species.famili.name}; didapatkan dari {species.way_to_collect}; 
                       ditanam oleh {new Set(species.plant.map((plant, index) => ' '+plant.planter+','))} pada {species.planting_date}.</td>
                       <td className="border border-black p-1">-</td>
                     </tr>
@@ -138,7 +138,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
             Gendub : 0
           </div>
           <div>
-            Genus : {new Set(props.data.species.map((item) => item.famili.genus)).size} ( {new Set(props.data.species.map((item) => item.famili.genus))} )
+            Genus : {new Set(props.data.species.map((item) => item.genus)).size} ( {new Set(props.data.species.map((item) => item.genus))} )
           </div>
           <div>
             Spesies : {props.data.species.length}

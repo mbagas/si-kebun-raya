@@ -35,7 +35,7 @@ export default function AddDataRequest(props) {
       if(props.dataRequest.family_id != null){
         items = props.dataRequest.famili.species.map((item) => ({
           'Nomor Kolektor': item.collector_number,
-          'Nama Spesies': item.famili.genus + ' ' + item.name,
+          'Nama Spesies': item.genus + ' ' + item.name,
           'Nama Lokal': item.local_name,
           'Famili': item.famili.name,
           'Tanggal Tanam': item.planting_date,
@@ -49,7 +49,7 @@ export default function AddDataRequest(props) {
       } else if(species_id != null){
         items = props.dataRequest.species.map((item) => ({
           'Nomor Kolektor': item.collector_number,
-          'Nama Spesies': item.famili.genus + ' ' + item.name,
+          'Nama Spesies': item.genus + ' ' + item.name,
           'Nama Lokal': item.local_name,
           'Famili': item.famili.name,
           'Tanggal Tanam': item.planting_date,

@@ -10,7 +10,6 @@ export default function AddFamili(props) {
 
   const { data, setData, patch, processing, errors, reset } = useForm({
     name: props.famili.name,
-    genus: props.famili.genus,
   });
 
   const handleOnChange = (event) => {
@@ -47,21 +46,7 @@ export default function AddFamili(props) {
           <InputError message={errors.name} className="mt-2" />
         </div>
 
-        <div className="mt-4">
-          <InputLabel htmlFor="genus" value="genus" />
-
-          <TextInput
-            id="genus"
-            name="genus"
-            value={data.genus}
-            className="mt-1 block w-full"
-            autoComplete="familiname"
-            onChange={handleOnChange}
-            required
-          />
-
-          <InputError message={errors.genus} className="mt-2" />
-        </div>
+        
 
         <div className="flex items-center justify-end mt-4">
 

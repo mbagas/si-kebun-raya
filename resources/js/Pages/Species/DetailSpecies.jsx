@@ -231,7 +231,7 @@ export default function AddSpecies(props) {
             </div>
             <div>
               <label className="font-medium text-sm text-gray-700">
-                {props.species.famili.genus} {props.species.name}
+                {props.species.genus} {props.species.name}
               </label>
             </div>
           </div>
