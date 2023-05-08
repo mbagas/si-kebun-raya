@@ -144,24 +144,27 @@ export default function Species(props) {
   return (
     <AdminLayout>
       <Head title="species" />
-      <h2 className="text-2xl font-bold">
-        species
-      </h2>
-      <div className="mt-2">
-        <DataTable value={props.species} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['access_number', 'name', 'local_name', 'famili', 'collection_origin', 'planting_date']} header={header} emptyMessage="No data found."
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="access_number" header="No Akses" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="local_name" header="Nama Lokal" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="collection_origin" header="Asal Koleksi" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="planting_date" header="Tanggal Tanam" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="way_to_collect" header="Cara Mendapatkan" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '15rem' }} />
-        </DataTable>
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
+        <h2 className="text-2xl font-bold">
+          species
+        </h2>
+        <div className="mt-2">
+          <DataTable value={props.species} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+            globalFilterFields={['access_number', 'name', 'local_name', 'famili', 'collection_origin', 'planting_date']} header={header} emptyMessage="No data found."
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
+            <Column field="access_number" header="No Akses" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="local_name" header="Nama Lokal" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="collection_origin" header="Asal Koleksi" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="planting_date" header="Tanggal Tanam" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="way_to_collect" header="Cara Mendapatkan" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '15rem' }} />
+          </DataTable>
+        </div>
       </div>
+      
       <Dialog header={'Export data spesies'} visible={exportVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setExportVisible(false)}>
         <div className="mt-4">
           <InputLabel htmlFor="name" value="Filter Asal Koleksi" />

@@ -20,6 +20,7 @@ return new class extends Migration
           $table->string('image')->nullable();
           $table->string('planter')->nullable();
           $table->date('planting_date')->nullable();
+          $table->date('inspection_date')->nullable();
           $table->timestamps();
         });
     }

@@ -46,7 +46,7 @@ export default function AddDataRequest(props) {
           'Lokasi Tanam': item.planting_coordinate,
           'Cara Mendapatkan': item.way_to_collect,
         }));
-      } else if(species_id != null){
+      } else {
         items = props.dataRequest.species.map((item) => ({
           'Nomor Kolektor': item.collector_number,
           'Nama Spesies': item.genus + ' ' + item.name,
@@ -60,6 +60,7 @@ export default function AddDataRequest(props) {
           'Lokasi Tanam': item.planting_coordinate,
           'Cara Mendapatkan': item.way_to_collect,
         }));
+        console.log(items);
       }
 
       const ws = utils.json_to_sheet(items);

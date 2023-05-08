@@ -10,6 +10,7 @@ export default function AddPlot(props) {
 
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
+    childName: '',
     latitude: '',
     longitude: '',
   });
@@ -32,20 +33,36 @@ export default function AddPlot(props) {
       </h2>
       <form onSubmit={submit}>
         <div>
-          <InputLabel htmlFor="name" value="Name" />
+          <InputLabel htmlFor="name" value="VAK" />
 
           <TextInput
             id="name"
             name="name"
             value={data.name}
             className="mt-1 block w-full"
-            autoComplete="name"
+            autoComplete="VAK"
             isFocused={true}
             onChange={handleOnChange}
             required
           />
 
           <InputError message={errors.name} className="mt-2" />
+        </div>
+        <div>
+          <InputLabel htmlFor="name" value="Anak Petak" />
+
+          <TextInput
+            id="childName"
+            name="childName"
+            value={data.childName}
+            className="mt-1 block w-full"
+            autoComplete="Anak Petak"
+            isFocused={true}
+            onChange={handleOnChange}
+            required
+          />
+
+          <InputError message={errors.childName} className="mt-2" />
         </div>
 
         <div className="mt-4">

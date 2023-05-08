@@ -32,7 +32,7 @@ export default function User(props) {
     return (
       <div className="flex justify-item-end">
         <Link href={route('user.create')}>
-          <Button type="button" icon="pi pi-plus" severity="success" />
+          <Button type="button" label="Tambah" icon="pi pi-plus" severity="success" />
         </Link>
         
       </div>

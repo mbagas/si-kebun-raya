@@ -10,6 +10,7 @@ export default function EditPlot(props) {
 
   const { data, setData, patch, processing, errors, reset } = useForm({
     name: props.plot.name,
+    childName: props.plot.child_name,
     latitude: props.plot.latitude,
     longitude: props.plot.longitude,
   });
@@ -32,7 +33,7 @@ export default function EditPlot(props) {
       </h2>
       <form onSubmit={submit}>
         <div>
-          <InputLabel htmlFor="name" value="Name" />
+          <InputLabel htmlFor="name" value="VAK" />
 
           <TextInput
             id="name"
@@ -46,6 +47,22 @@ export default function EditPlot(props) {
           />
 
           <InputError message={errors.name} className="mt-2" />
+        </div>
+        <div>
+          <InputLabel htmlFor="name" value="Anak Petak" />
+
+          <TextInput
+            id="childName"
+            name="childName"
+            value={data.childName}
+            className="mt-1 block w-full"
+            autoComplete="Anak Petak"
+            isFocused={true}
+            onChange={handleOnChange}
+            required
+          />
+
+          <InputError message={errors.childName} className="mt-2" />
         </div>
 
         <div className="mt-4">

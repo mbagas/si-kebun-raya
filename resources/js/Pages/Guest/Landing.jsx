@@ -24,6 +24,10 @@ export default function Landing(props) {
     })
   }, [filterData]);
 
+  const handleImageError = (event) => {
+    event.target.src = 'no_image.jpg';
+  };
+
   return (
     <GuestsLayout>
       <Head title="Kebun Raya"/>
@@ -32,10 +36,10 @@ export default function Landing(props) {
           KEBUN RAYA ITERA
         </h2>
       </div>
-      <div className="grid grid-rows-3 gap-1 h-auto w-100 justify-items-center mt-4">
+      <div className="grid grid-rows-1 gap-1 h-auto w-100 justify-items-center mt-4">
         <div className="w-72">
           <InputLabel htmlFor="Famili" value="Search" />
-          <TextInput value={filterData} onChange={(e) => setFilterData(e.target.value)}
+          <TextInput value={filterData} type="search" onChange={(e) => setFilterData(e.target.value)}
              className="w-full md:w-14rem" />
         </div>
       </div>
@@ -45,8 +49,10 @@ export default function Landing(props) {
             return(
               <Link href={route('species.show', species.id)}>
                 <div className="shadow-lg rounded-md m-8 flex flex-col gap-3 h-auto justify-center bg-white">
-                  <div className="h-72 justify-self-center text-center object-contain">
-                    <Image className="object-contain" src={species.image[0]} alt="Image" width="100%" />
+                  <div className="h-72 justify-self-center text-center object-contain align-middle grid place-content-center">
+                    <div>
+                      <Image className="object-fill" src={species.image[0]} onError={handleImageError} alt="Image" width="100%" height="100%"/>
+                    </div>
                   </div>
                   <div className="h-auto justify-self-center text-center mb-4">
                     <h2 className="text-base font-semibold">

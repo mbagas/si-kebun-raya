@@ -22,7 +22,6 @@ return new class extends Migration
           $table->bigInteger('family_id')->nullable();
           $table->bigInteger('plot_id')->nullable();
           $table->date('planting_date')->nullable();
-          $table->string('planter')->nullable();
           $table->string('collection_origin')->nullable();
           $table->integer('amount_in_nurseries')->nullable();
           $table->integer('amount_in_field')->nullable();

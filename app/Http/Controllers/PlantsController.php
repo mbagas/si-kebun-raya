@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plants;
 use App\Models\Species;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PlantsController extends Controller
 {
@@ -30,12 +31,11 @@ class PlantsController extends Controller
   public function store(Request $request)
   {
     //
-    
     $request->validate([
-      'accessNumber' => 'required|string|max:255',
       'speciesId' => 'required',
-      'coordinate'=> 'required|string',
+      'coordinate'=> 'string',
       'status' => 'required|string',
+      'plantingDate' => 'required',
     ]);
 
     if(is_file($request->image)) {
@@ -47,18 +47,18 @@ class PlantsController extends Controller
         'species_id' => $request->speciesId,
         'coordinate' => $request->coordinate,
         'status' => $request->status,
+        'planting_date' => Carbon::parse($request->plantingDate),
         'image' => $fileName,
         'planter' => $request->planter,
-        'planting_date' => $request->plantingDate,
       ]);
     } else {
       $plant = Plants::create([
         'access_number' => $request->accessNumber,
         'species_id' => $request->speciesId,
         'coordinate' => $request->coordinate,
+        'planting_date' => Carbon::parse($request->plantingDate),
         'status' => $request->status,
         'planter' => $request->planter,
-        'planting_date' => $request->plantingDate,
       ]);
     }
     if($plant->species_id) {
@@ -96,11 +96,9 @@ class PlantsController extends Controller
   {
     //
     $request->validate([
-      'accessNumber' => 'required|string|max:255',
       'speciesId' => 'required',
       'coordinate' => 'required|string',
       'status' => 'required|string',
-      'plantingDate' => 'required'
     ]);
     
 
@@ -112,7 +110,7 @@ class PlantsController extends Controller
         }
       }
       
-      $fileName = $request->accessNumber . '_' . $request->coordinate . '.' . $request->image->extension();
+      $fileName = $request->speciesId . '_' . $request->accessNumber  . '.' . $request->image->extension();
       $request->image->move(public_path('plantPhoto'), $fileName);
 
       $plant->update([
@@ -122,7 +120,8 @@ class PlantsController extends Controller
         'status' => $request->status,
         'image' => $fileName,
         'planter' => $request->planter,
-        'planting_date' => $request->plantingDate,
+        'planting_date' => Carbon::parse($request->plantingDate),
+        'inspection_date' => Carbon::parse($request->inspectionDate),
       ]);
     } else {
       $plant ->update([
@@ -131,7 +130,8 @@ class PlantsController extends Controller
         'coordinate' => $request->coordinate,
         'status' => $request->status,
         'planter' => $request->planter,
-        'planting_date' => $request->plantingDate,
+        'planting_date' => Carbon::parse($request->plantingDate),
+        'inspection_date' => Carbon::parse($request->inspectionDate),
       ]);
     }
     

@@ -14,7 +14,7 @@ export default function Dashboard(props) {
   const years = [new Set(props.speciesByTime.map(item => item.year))];
   const [chartDataSpeciesByTime, setChartDataSpeciesByTime] = useState({});
   const [chartOptionsChartLine, setChartOptionsChartline] = useState({});
-
+  console.log(selectedYear);
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -131,7 +131,7 @@ export default function Dashboard(props) {
       <Head title="Dashboard" />
 
       <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-        <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+        <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
           <div className="text-sm font-medium text-gray-500 truncate">
             Total users
           </div>
@@ -157,19 +157,19 @@ export default function Dashboard(props) {
         </div>
       </div>
 
-      <div className="w-full px-4 py-5 bg-white rounded-lg shadow grid justify-items-center mb-6">
-        <h2 className="text-2xl font-bold mb-3">
+      <div className="px-4 py-5 bg-white rounded-lg shadow mb-6 text-center">
+        <h2 className="text-2xl font-bold mb-3 ">
           Penambahan Tanaman 
         </h2>
         <Dropdown value={selectedYear} onChange={(e) => setSelectedYear(e.value)} options={years}
           placeholder="Select Year" className="w-full md:w-1/3 mb-3" />
 
-        <Chart type="line" data={chartDataSpeciesByTime} options={chartOptionsChartLine} className="w-full" />
+        <Chart type="line" data={chartDataSpeciesByTime} options={chartOptionsChartLine} className=" w-full " />
       </div>
 
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow grid justify-items-center mb-6">
         <h2 className="text-2xl font-bold">
-          Jumlah Tanaman / Wilayah
+          Jumlah Tanaman / Asal Koleksi
         </h2>
         <Chart type="pie" data={chartDataSpeciesByOrigin} options={chartOptionsChartPie} className="w-full md:w-1/3" />
       </div>
@@ -180,7 +180,6 @@ export default function Dashboard(props) {
         </h2>
         <Chart type="pie" data={chartDataSpeciesByWayCollect} options={chartOptionsChartPie} className="w-full md:w-1/3" />
       </div>
-      
       
     </AdminLayout>
   );

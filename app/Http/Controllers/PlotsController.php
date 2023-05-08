@@ -47,10 +47,12 @@ class PlotsController extends Controller
     //
     $request->validate([
       'name' => 'required|string|max:255',
+      'childName' => 'required|string|max:255',
     ]);
 
     $plot = Plots::create([
       'name' => $request->name,
+      'child_name' => $request->childName,
       'latitude' => $request->latitude,
       'longitude' => $request->longitude,
     ]);
@@ -82,8 +84,13 @@ class PlotsController extends Controller
   public function update(Request $request, Plots $plot)
   {
     //
+    $request->validate([
+      'name' => 'required|string|max:255',
+      'childName' => 'required|string|max:255',
+    ]);
     $plot->update([
       'name' => $request->name,
+      'child_name' => $request->childName,
       'latitude' => $request->latitude,
       'longitude' => $request->longitude,
     ]);

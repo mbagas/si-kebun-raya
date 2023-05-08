@@ -104,8 +104,8 @@ class DataRequestsController extends Controller
   {
     //
 
-    
     if($request->status == "Diterima") {
+
       $get_random_string = md5(microtime());
       $project = [
         'greeting' => 'Hi ' . $request->name . ',',
@@ -115,6 +115,7 @@ class DataRequestsController extends Controller
         'actionText' => 'Buka Web Kebun Raya ITERA',
         'actionURL' => url('/'),
       ];
+      $data_request->notify(new DataRequestEmail($project));
       $data_request->update([
         'status' => $request->status,
         'token' => $get_random_string,
@@ -122,21 +123,19 @@ class DataRequestsController extends Controller
     } else if ($request->status == "Ditolak") {
       $project = [
         'greeting' => 'Hi ' . $request->name . ',',
-        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan tertentu.',
+        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan : ' . $request->decline_reason .'.',
         'result' => 'TIDAK DI TERIMA',
         'thanks' => 'Terima Kasih',
         'actionText' => 'Buka Web Kebun Raya ITERA',
         'actionURL' => url('/'),
       ];
+      $data_request->notify(new DataRequestEmail($project));
       $data_request->update([
         'status' => $request->status,
         'token' => null,
       ]);
     };
     
-    $data_request->notify(new DataRequestEmail($project));
-    
-
     return to_route('data-request.index')->with('message', 'Validation Successfully');
 
   }

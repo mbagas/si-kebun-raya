@@ -18,9 +18,12 @@ return new class extends Migration
           $table->string('email')->nullable();
           $table->text('reason')->nullable();
           $table->bigInteger('family_id')->nullable();
-          $table->text('species_id')->nullable();
+          $table->string('type')->nullable();
           $table->string('status')->nullable();
+          $table->text('decline_reason')->nullable();
           $table->string('token')->nullable();
+          
+
           $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ export default function Plot(props) {
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    childName: { value: null, matchMode: FilterMatchMode.CONTAINS },
     latitude: { value: null, matchMode: FilterMatchMode.CONTAINS },
     longitude: { value: null, matchMode: FilterMatchMode.CONTAINS }
   })
@@ -68,7 +69,8 @@ export default function Plot(props) {
           globalFilterFields={['name', 'latitude', 'longitude']} header={header} emptyMessage="No data found."
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+          <Column field="name" header="VAK" filter filterPlaceholder="Search by VAK" sortable style={{ minWidth: '12rem' }} />
+          <Column field="child_name" header="Anak Petak" filter filterPlaceholder="Search by Anak Petak" sortable style={{ minWidth: '12rem' }} />
           <Column field="latitude" header="Latitude" filter filterPlaceholder="Search by latitude" sortable style={{ minWidth: '12rem' }} />
           <Column field="longitude" header="Longitude" filter filterPlaceholder="Search by longitude" sortable style={{ minWidth: '12rem' }} />
           <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />

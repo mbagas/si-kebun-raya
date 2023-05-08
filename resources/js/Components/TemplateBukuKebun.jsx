@@ -33,7 +33,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
     })
     setTotalSakit(sakit)
 
-  },[0])
+  },[props])
 
   return (
     <div ref={ref}>
@@ -66,7 +66,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                 <th className="border border-black">No. KOLEKTOR</th>
                 <th className="border border-black">No. AKSES</th>
                 <th className="border border-black">DEKSRIPSI KOLEKSI</th>
-                <th className="border border-black">PERUBAHAN NAMA & KETERANGAN LAIN</th>
+                <th className="border border-black">KETERANGAN LAIN</th>
               </tr>
             </thead>
             <tbody>
@@ -138,7 +138,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
             Gendub : 0
           </div>
           <div>
-            Genus : {new Set(props.data.species.map((item) => item.genus)).size} ( {new Set(props.data.species.map((item) => item.genus))} )
+            Genus : {new Set(props.data.species.map((item) => item.genus)).size} ( {new Set(props.data.species.map((item) => item.genus+', '))} )
           </div>
           <div>
             Spesies : {props.data.species.length}

@@ -18,6 +18,8 @@ class Plants extends Model
       'status',
       'image',
       'planter',
+      'planting_date',
+      'inspection_date',
     ];
 
     public function species(): BelongsTo

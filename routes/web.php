@@ -25,19 +25,6 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/', [GuestController::class, 'index'])->name('guest');
 Route::get('/data-request/getdata', [GuestController::class, 'filterByToken'])->name('dataFilteredByToken');
 Route::resource('data-request', DataRequestsController::class)->only(['create', 'store']);
@@ -64,8 +51,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('species', SpeciesController::class)->only(['show']);
-
-
-
 
 require __DIR__.'/auth.php';

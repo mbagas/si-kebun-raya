@@ -185,22 +185,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.name} className="mt-2" />
         </div>
-        <div>
-          <InputLabel htmlFor="planter" value="Penanam" />
 
-          <TextInput
-            id="planter"
-            name="planter"
-            value={data.planter}
-            className="mt-1 block w-full"
-            autoComplete="planter"
-            isFocused={true}
-            onChange={handleOnChange}
-            required
-          />
-
-          <InputError message={errors.planter} className="mt-2" />
-        </div>
         <div>
           <InputLabel htmlFor="collectionOrigin" value="Asal Koleksi" />
 

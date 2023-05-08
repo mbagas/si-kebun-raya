@@ -14,6 +14,7 @@ import { useState, useRef } from "react";
 import { router } from '@inertiajs/react'
 import { Dialog } from 'primereact/dialog';
 import { QRCodeCanvas } from 'qrcode.react';
+import { Calendar } from 'primereact/calendar';
 
 
 export default function AddSpecies(props) {
@@ -28,14 +29,15 @@ export default function AddSpecies(props) {
   })
 
   const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
-    id:'',
+    id: '',
     accessNumber: '',
     coordinate: '',
     status: '',
     speciesId: props.species.id,
     image: '',
     planter: '',
-    planting_date: '',
+    plantingDate: new Date(),
+    inspectionDate: new Date(),
   });
 
   const handleOnChange = (event) => {
@@ -56,7 +58,7 @@ export default function AddSpecies(props) {
     post(route('plants.update', data.id, {
       _method: 'patch',
     }), {
-      onFinish: () => { 
+      onFinish: () => {
         setFormVisible(false);
       }
     });
@@ -81,13 +83,15 @@ export default function AddSpecies(props) {
       speciesId: props.species.id,
       image: '',
       planter: '',
-      planting_date: '',
+      plantingDate: new Date(),
+      inspectionDate: new Date(),
     });
     setFormVisible(true);
   }
 
   const editPlant = (rowData) => {
     setIsEditing(true);
+    console.log(rowData);
     setPlantPhoto(rowData.image);
     setData({
       id: rowData.id,
@@ -97,7 +101,8 @@ export default function AddSpecies(props) {
       speciesId: rowData.species_id,
       image: '',
       planter: rowData.planter ? rowData.planter : '',
-      planting_date: rowData.planting_date ? rowData.planting_date : '',
+      plantingDate: rowData.planting_date ? rowData.planting_date : new Date(),
+      inspectionDate: rowData.inspection_date ? rowData.inspection_date : new Date(),
       _method: 'patch',
     });
 
@@ -105,14 +110,13 @@ export default function AddSpecies(props) {
   }
 
   const onUploadImage = (e) => {
-    
+
     setPlantPhoto(
-      [URL.createObjectURL(e.target.files[0]),true]
+      [URL.createObjectURL(e.target.files[0]), true]
     );
     // setPlantPhoto([1, URL.createObjectURL(e.target.files[0])]);
     // setPlantPhoto[2](URL.createObjectURL(plantPhoto[2]));
   }
-  console.log(props.speciesUrl);
 
   const renderHeader = () => {
     return (
@@ -147,12 +151,13 @@ export default function AddSpecies(props) {
   return (
     <AdminLayout>
       <Head title="Add Species" />
-      <h2 className="text-2xl font-bold">
-        Tambah Species
-      </h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4">
         {/* Data Species */}
-        <div className="grid grid-cols-1 gap-y-2">
+        <div className="grid grid-cols-1 gap-y-2 px-4 py-5 bg-white rounded-lg shadow">
+          <h2 className="text-2xl font-bold">
+            Detail Species
+          </h2>
           <div className="grid grid-cols-2 gap-x-2">
             <div>
               <label className="font-medium text-sm text-gray-700">
@@ -162,17 +167,25 @@ export default function AddSpecies(props) {
             <div className="grid grid-row-2 gap-y-2">
               <div ref={qrRef}>
                 <QRCodeCanvas
-                id="qrCode"
-                value={props.speciesUrl}
-                size={150}
-                level={"H"}
-              />
+                  id="qrCode"
+                  value={props.speciesUrl}
+                  size={150}
+                  level={"H"}
+                  imageSettings={{
+                    src: "https://static.zpao.com/favicon.png",
+                    x: undefined,
+                    y: undefined,
+                    height: 24,
+                    width: 24,
+                    excavate: true,
+                  }}
+                />
               </div>
               <div>
                 <Button onClick={downloadQRCode} icon="pi pi-trash" label="Download" />
-                  
+
               </div>
-              
+
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-2">
@@ -194,7 +207,7 @@ export default function AddSpecies(props) {
             <div>
               <label className="font-medium text-sm text-gray-700">
                 {props.species.collection_number}{
-                  props.species.plant.length > 0 ? '-'+props.species.plant.map((item) => ' '+props.species.collection_number+item.access_number) : ''
+                  props.species.plant.length > 0 ? '-' + props.species.plant.map((item) => ' ' + props.species.collection_number + (item.access_number ? item.access_number: '')) : ''
                 }
               </label>
             </div>
@@ -280,18 +293,6 @@ export default function AddSpecies(props) {
             <div>
               <label className="font-medium text-sm text-gray-700">
                 {props.species.planting_date}
-              </label>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-x-2">
-            <div>
-              <label className="font-medium text-sm text-gray-700">
-                Penanam :
-              </label>
-            </div>
-            <div>
-              <label className="font-medium text-sm text-gray-700">
-                {props.species.planter}
               </label>
             </div>
           </div>
@@ -415,12 +416,12 @@ export default function AddSpecies(props) {
               </label>
             </div>
           </div>
-          
+
         </div>
         {/* Koleksi Spesimen */}
-        <div>
+        <div className="px-4 py-5 bg-white rounded-lg shadow">
           <h4 className="text-xl font-bold">
-            Koleksi Tanaman
+            Koleksi Spesimen
           </h4>
           <div className="mt-2">
             <DataTable value={props.species.plant} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
@@ -448,7 +449,6 @@ export default function AddSpecies(props) {
                   autoComplete="name"
                   isFocused={true}
                   onChange={handleOnChange}
-                  required
                 />
 
                 <InputError message={errors.accessNumber} className="mt-2" />
@@ -480,9 +480,9 @@ export default function AddSpecies(props) {
               <div className="mt-4">
                 <InputLabel htmlFor="genus" value="Gambar Tanaman" />
                 {
-                  isEditing ? <Image src={plantPhoto[0]} onError={(e) => e.target.src ="https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png"} alt="Image" width="250" preview /> : ''
+                  isEditing ? <Image src={plantPhoto[0]} onError={(e) => e.target.src = "https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png"} alt="Image" width="250" preview /> : ''
                 }
-                
+
                 <input
                   type="file"
                   className="block w-full text-sm text-slate-500
@@ -518,15 +518,33 @@ export default function AddSpecies(props) {
 
                 <InputError message={errors.planter} className="mt-2" />
               </div>
+              {
+                isEditing ? (<>
+                  <div className="mt-4">
+                    <InputLabel htmlFor="inspectionDate" value="Tanggal Tanam" />
 
-              <div className="mt-4">
-                <InputLabel htmlFor="plantingDate" value="Tanggal Tanam" />
+                    <Calendar value={new Date(data.plantingDate)} onChange={(e) => setData('plantingDate', e.value)} dateFormat="yy-mm-dd" />
 
-                {/* <Calendar value={data.plantingDate} onChange={(e) => setData('plantingDate', new Date('Y-m-d H:i:s',e.value))} dateFormat="yy-mm-dd" /> */}
-                <Calendar value={new Date(data.plantingDate)} onChange={(e) => setData('plantingDate', e.value)} dateFormat="yy-mm-dd" />
+                    <InputError message={errors.name} className="mt-2" />
+                  </div>
+                  <div className="mt-4">
+                    <InputLabel htmlFor="inspectionDate" value="Tanggal Inspeksi" />
 
-                <InputError message={errors.name} className="mt-2" />
-              </div>
+                    <Calendar value={new Date(data.inspectionDate)} onChange={(e) => setData('inspectionDate', e.value)} dateFormat="yy-mm-dd" />
+
+                    <InputError message={errors.name} className="mt-2" />
+                  </div>
+                </>) : (
+                  <div className="mt-4">
+                    <InputLabel htmlFor="inspectionDate" value="Tanggal Tanam" />
+
+                    <Calendar value={new Date(data.plantingDate)} onChange={(e) => setData('plantingDate', e.value)} dateFormat="yy-mm-dd" />
+
+                    <InputError message={errors.name} className="mt-2" />
+                  </div>
+                )
+              }
+
 
               <div className="flex items-center justify-end mt-4">
 
@@ -538,7 +556,7 @@ export default function AddSpecies(props) {
           </Dialog>
         </div>
       </div>
-      
+
     </AdminLayout>
   )
 }

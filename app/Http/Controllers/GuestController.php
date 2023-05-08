@@ -26,8 +26,12 @@ class GuestController extends Controller
   {
     $dataRequest = DataRequests::where('status','Diterima')->where('token', $request->token)->first();
     if ($dataRequest) {
+      $species = Species::with('famili')->get();
+      $families = Families::all();
       return Inertia::render('Guest/AddDataRequest', [
         'dataRequest' => $dataRequest->load('famili','famili.species', 'famili.species.plot', 'famili.species.famili','species','species.famili','species.plot'),
+        'species' => $species,
+        'families' => $families,
         'status' => '200'
       ]);
     } else {

@@ -12,6 +12,7 @@ class Plots extends Model
 
   protected $fillable = [
     'name',
+    'child_name',
     'latitude',
     'longitude',
   ];

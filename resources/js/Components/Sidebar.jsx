@@ -5,22 +5,21 @@ export default function Sidebar({ children }) {
   const [collapse, setCollapse] = useState(false);
   return (
     <>
-      <div className="w-100 px-5 py-2 grid grid-cols-2 border-b-2 border-gray-300">
+      <div className="w-screen px-5 py-2 grid grid-cols-2 border-b-2 border-gray-300">
         <div>
-          Kebun raya ITERA
+          <h2 className="text-2xl font-bold">Kebun raya ITERA</h2> 
         </div>
         <div className="text-end">
           <button onClick={() => setCollapse(!collapse)} className="visible lg:invisible lg:w-0 right-0">
-            Menu
+            <i className="pi pi-align-justify" style={{ fontSize: '1.5rem' }}></i>
           </button>
         </div>
       </div>
 
 
-      <div className="flex">
+      <div className="flex bg-slate-50">
 
-        <div
-          className={`  ${collapse ? "invisible w-0 p-0" : "visible  p-3"} sticky lg:visible lg:w-60 flex flex-col h-100 min-h-screen bg-gray-800 shadow duration-300`}
+        <div className={`  ${collapse ? "invisible w-0 p-0" : "visible  p-3"} sticky lg:visible lg:w-60 flex flex-col h-100 min-h-screen bg-gray-800 shadow duration-300`}
         >
           <div className="space-y-3">
             <div className="flex items-center justify-start p-2">
@@ -60,8 +59,8 @@ export default function Sidebar({ children }) {
             <div className="flex-1">
               <ul className="pt-2 pb-4 space-y-1 text-sm">
                 <li className="rounded-sm">
-                  <a
-                    href="#"
+                  <Link
+                    href={route('dashboard')}
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
                     <svg
@@ -79,7 +78,7 @@ export default function Sidebar({ children }) {
                       />
                     </svg>
                     <span className="text-gray-100">Home</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="rounded-sm">
                   <Link
@@ -166,7 +165,7 @@ export default function Sidebar({ children }) {
         </div>
         
 
-        <div className="container px-6 lg:mx-auto mt-12 w-100 overflow-x-auto">
+        <div className="container px-6 pb-6 lg:mx-auto w-full pt-8 w-screen overflow-x-auto">
           {children}
           {/* <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
                     <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
