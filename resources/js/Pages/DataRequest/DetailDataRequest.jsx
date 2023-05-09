@@ -4,9 +4,12 @@ import { Button } from 'primereact/button';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 import React, { useState, useRef, useCallback } from "react";
+import { Dialog } from 'primereact/dialog';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 export default function DetailDataRequest(props) {
   const [loading, setLoading] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
   const {data, setData, patch, reset, errors} = useForm({
     id: props.dataRequest.id,
     name: props.dataRequest.name,
@@ -16,6 +19,8 @@ export default function DetailDataRequest(props) {
     species_id: props.dataRequest.species_id,
     status: props.dataRequest.status,
     reason: props.dataRequest.reason,
+    type: props.dataRequest.type,
+    declineReason: '',
   });
 
   const dataRequestValidate = () => {
@@ -28,9 +33,11 @@ export default function DetailDataRequest(props) {
     });
   };
 
-  const dataRequestReject = () => {
-    setLoading(true);
+  const handleOnChange = (event) => {
+    setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+  };
 
+  const dataRequestReject = async () => {
     setData('status','Ditolak');
     patch(route('data-request.update', props.dataRequest.id), {
       preserveScroll: true,
@@ -104,7 +111,11 @@ export default function DetailDataRequest(props) {
               </div>
               <div className="col-span-2">
                 <label className="font-medium text-sm text-gray-700">
-                  {props.dataRequest.species.genus} {props.dataRequest.species.name}
+                  {
+                    props.dataRequest.species.map((item, index) => {
+                      return item.genus + ' ' + item.name + (index !== props.dataRequest.species.length - 1 ? ', ' : '')
+                    })
+                  }
                 </label>
               </div>
             </div>
@@ -136,6 +147,23 @@ export default function DetailDataRequest(props) {
             </label>
           </div>
         </div>
+
+        {
+          props.dataRequest.status === 'Ditolak' ? (
+          <div className="grid grid-cols-3 gap-x-2">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Alasan ditolak :
+              </label>
+            </div>
+            <div className="col-span-2">
+              <label className="font-medium text-sm text-gray-700">
+                {props.dataRequest.decline_reason}
+              </label>
+            </div>
+          </div>
+          ) : ''
+        }
         
         
       </div>
@@ -149,9 +177,28 @@ export default function DetailDataRequest(props) {
           <Button type="button" onClick={dataRequestValidate} label="Validasi" severity="success" />
         </div>
         <div className="justify-self-center md:justify-self-start">
-          <Button type="button" onClick={dataRequestReject} outlined label="Tolak" severity="danger" />
+          <Button type="button" onClick={() => setFormVisible(true)} outlined label="Tolak" severity="danger" />
         </div>
       </div>
+      <Dialog header="Tolak Permintaan" visible={formVisible} onHide={() => setFormVisible(false)}>
+        <div className="flex flex-col w-full md:w-80">
+          <div className="mb-4 mt-4">
+            <InputLabel htmlFor="inspectionDate" value="Alasan ditolak" />
+            <InputTextarea 
+              id="declineReason"
+              name="declineReason"
+              value={data.declineReason}
+              className="mt-1 block w-full"
+              autoComplete="A"
+              isFocused={true}
+              onChange={handleOnChange} />
+          </div>
+          <div className="flex items-center justify-end gap-3">
+            <Button type="button" onClick={dataRequestReject} label="Tolak" severity="danger" />
+            <Button type="button" onClick={() => setFormVisible(false)} outlined label="Batal" severity="secondary" />
+          </div>
+        </div>
+      </Dialog>
     </AdminLayout>
   )
 }

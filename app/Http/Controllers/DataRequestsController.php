@@ -43,33 +43,35 @@ class DataRequestsController extends Controller
    */
   public function store(Request $request)
   {
-    //
+
     $request->validate([
       'name' => 'required|string|max:255',
       'email' => 'required|email|string|max:255',
       'institute' => 'required|string|max:255',
       'familyId' => 'integer|max:255|nullable',
       'reason' => 'required|string',
-      'filterBy' => 'required|string',
+      'type' => 'required|string',
     ]);
 
-    if ($request->filterBy == 'famili') {
+    if ($request->type == 'famili') {
       $dataRequest = DataRequests::create([
         'name' => $request->name,
         'email' => $request->email,
         'institute' => $request->institute,
         'family_id' => $request->familyId,
         'reason' => $request->reason,
-        'status' => 'Pending'
+        'status' => 'Pending',
+        'type' => $request->type,
       ]);
-    } else if ($request->filterBy == 'species') {
+    } else if ($request->type == 'species') {
       $dataRequest = DataRequests::create([
         'name' => $request->name,
         'email' => $request->email,
         'institute' => $request->institute,
         // 'species_id' => json_encode($request->speciesId),
         'reason' => $request->reason,
-        'status' => 'Pending'
+        'status' => 'Pending',
+        'type' => $request->type,
       ]);
       $dataRequest->species()->attach($request->speciesId);
     }
@@ -102,14 +104,13 @@ class DataRequestsController extends Controller
    */
   public function update(Request $request, DataRequests $data_request)
   {
-    //
 
     if($request->status == "Diterima") {
 
       $get_random_string = md5(microtime());
       $project = [
         'greeting' => 'Hi ' . $request->name . ',',
-        'body' => 'Permintaan data tumbuhan anda diterima. Silahkan gunakan kode ini untuk mengunduh data tumbuhan yang anda butuhkan.',
+        'body' => 'Permintaan data tumbuhan anda diterima. Silahkan gunakan kode ini untuk mengunduh data tumbuhan yang anda butuhkan. Peringatan kode ini hanya berlaku 30 hari.',
         'result' => $get_random_string,
         'thanks' => 'Terima Kasih',
         'actionText' => 'Buka Web Kebun Raya ITERA',
@@ -123,7 +124,7 @@ class DataRequestsController extends Controller
     } else if ($request->status == "Ditolak") {
       $project = [
         'greeting' => 'Hi ' . $request->name . ',',
-        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan : ' . $request->decline_reason .'.',
+        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan : ' . $request->declineReason .'.',
         'result' => 'TIDAK DI TERIMA',
         'thanks' => 'Terima Kasih',
         'actionText' => 'Buka Web Kebun Raya ITERA',
@@ -132,6 +133,7 @@ class DataRequestsController extends Controller
       $data_request->notify(new DataRequestEmail($project));
       $data_request->update([
         'status' => $request->status,
+        'decline_reason' => $request->declineReason,
         'token' => null,
       ]);
     };

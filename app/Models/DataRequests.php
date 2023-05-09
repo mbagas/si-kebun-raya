@@ -22,6 +22,8 @@ class DataRequests extends Model
     'species_id',
     'status',
     'token',
+    'decline_reason',
+    'type'
   ];
 
   public function famili(): BelongsTo

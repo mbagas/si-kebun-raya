@@ -23,7 +23,7 @@ export default function AddDataRequest(props) {
     speciesId: '',
     reason: '',
     token: '',
-    filterBy: 'famili'
+    type: 'famili'
   });
   const [token,setToken] = useState();
   console.log(props);
@@ -201,16 +201,16 @@ export default function AddDataRequest(props) {
 
               <div className="flex flex-wrap gap-3">
                 <div className="flex align-items-center">
-                  <RadioButton inputId="filterBy1" name="filterBy" value="famili" onChange={(e) => setData('filterBy', e.value)} checked={data.filterBy === 'famili'} />
-                  <label htmlFor="filterBy1" className="ml-2">Famili</label>
+                  <RadioButton inputId="type1" name="type" value="famili" onChange={(e) => setData('type', e.value)} checked={data.type === 'famili'} />
+                  <label htmlFor="type1" className="ml-2">Famili</label>
                 </div>
                 <div className="flex align-items-center">
-                  <RadioButton inputId="filterBy2" name="filterBy" value="species" onChange={(e) => setData('filterBy', e.value)} checked={data.filterBy === 'species'} />
-                  <label htmlFor="filterBy2" className="ml-2">Species</label>
+                  <RadioButton inputId="type2" name="type" value="species" onChange={(e) => setData('type', e.value)} checked={data.type === 'species'} />
+                  <label htmlFor="type2" className="ml-2">Species</label>
                 </div>
               </div>
             </div>
-            {data.filterBy == 'famili' ?
+            {data.type == 'famili' ?
               (<div className="mt-4">
                 <InputLabel htmlFor="familyId" value="Famili" />
 

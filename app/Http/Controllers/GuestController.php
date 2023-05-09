@@ -25,7 +25,9 @@ class GuestController extends Controller
   public function filterByToken(Request $request)
   {
     $dataRequest = DataRequests::where('status','Diterima')->where('token', $request->token)->first();
-    if ($dataRequest) {
+    $diff = $dataRequest->updated_at->diffInDays(now());
+
+    if ($dataRequest && $diff < 30) {
       $species = Species::with('famili')->get();
       $families = Families::all();
       return Inertia::render('Guest/AddDataRequest', [
