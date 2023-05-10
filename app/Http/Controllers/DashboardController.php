@@ -35,12 +35,23 @@ class DashboardController extends Controller
       ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
       ->get(); 
 
+    $totalFamili = Families::count();
+    $totalGenus = Species::select('genus')->distinct()->count();
+    $totalSpecies = Species::count();
+    $totalSpecimens = Plants::count();
+    $totalDataRequests = DataRequests::count();
+
 
     return Inertia::render('Dashboard', [
       'speciesByOrigin' => $speciesByOrigin,
       'speciesByWayCollect' => $speciesByWayCollect,
       'speciesByTime' => $speciesByTime,
       'plantsByTime' => $plantsByTime,
+      'totalFamili' => $totalFamili,
+      'totalGenus' => $totalGenus,
+      'totalSpecies' => $totalSpecies,
+      'totalSpecimens' => $totalSpecimens,
+      'totalDataRequests' => $totalDataRequests,
     ]);
   }
 }

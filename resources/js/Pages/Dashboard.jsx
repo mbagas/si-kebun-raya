@@ -1,19 +1,25 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { AdminLayout } from '@/Layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Chart } from 'primereact/chart';
 import { Dropdown } from 'primereact/dropdown';
+import { InputSwitch } from "primereact/inputswitch";
 
 export default function Dashboard(props) {
   const [chartDataSpeciesByOrigin, setChartDataSpeciesByOrigin] = useState({});
   const [chartDataSpeciesByWayCollect, setChartDataSpeciesByWayCollect] = useState({});
   const [chartOptionsChartPie, setChartOptionsChartPie] = useState({});
+
+  const [displayChartSpeciesByOriginFormat, setDisplayChartSpeciesByOriginFormat] = useState(false); //false = number , true = percent
+  const [displayChartSpeciesByWayCollectFormat, setDisplayChartSpeciesByWayCollectFormat] = useState(false); //false = number , true = percent
   
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const years = [new Set(props.speciesByTime.map(item => item.year))];
   const [chartDataSpeciesByTime, setChartDataSpeciesByTime] = useState({});
   const [chartOptionsChartLine, setChartOptionsChartline] = useState({});
+
+  
   console.log(selectedYear);
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -22,18 +28,20 @@ export default function Dashboard(props) {
 
   console.log(props.speciesByOrigin);
 
+  
+
   useEffect(() => {
     const documentStyle = getComputedStyle(document.documentElement);
 
-    const dataSpeciesByOrigin = {
-      labels: props.speciesByOrigin.map(item => item.collection_origin),
-      datasets: [
-        {
-          data: props.speciesByOrigin.map(item => item.total),
-          backgroundColor: generateColors(props.speciesByOrigin.length),
-        }
-      ]
-    }
+    // const dataSpeciesByOrigin = {
+    //   labels: props.speciesByOrigin.map(item => item.collection_origin),
+    //   datasets: [
+    //     {
+    //       data: props.speciesByOrigin.map(item => displayChartSpeciesByOriginFormat ? ((item.total / speciesByOriginSum()) * 100).toFixed(2) : item.total),
+    //       backgroundColor: generateColors(props.speciesByOrigin.length),
+    //     }
+    //   ]
+    // }
     const optionsChartPie = {
       plugins: {
         legend: {
@@ -44,7 +52,7 @@ export default function Dashboard(props) {
       }
     };
 
-    setChartDataSpeciesByOrigin(dataSpeciesByOrigin);
+    // setChartDataSpeciesByOrigin(dataSpeciesByOrigin);
     setChartOptionsChartPie(optionsChartPie);
 
     const dataSpeciesByWayCollect = {
@@ -117,7 +125,7 @@ export default function Dashboard(props) {
     setChartOptionsChartline(optionsChartLine);
 
   }, []);
-
+  
   const generateColors = (count) => {
     const colors = [];
     for (let i = 0; i < count; i++) {
@@ -126,33 +134,80 @@ export default function Dashboard(props) {
     return colors;
   }
 
+  const chartDataSum = (data) => data.reduce((a, b) => a + b.total, 0);
+
+
+  const dataSpeciesByOrigin = useMemo(() => {
+    let data = {
+      labels: props.speciesByOrigin.map(item => item.collection_origin),
+      datasets: [
+        {
+          data: props.speciesByOrigin.map(item => displayChartSpeciesByOriginFormat ? ((item.total / chartDataSum(props.speciesByOrigin)) * 100).toFixed(2) : item.total),
+          backgroundColor: generateColors(props.speciesByOrigin.length),
+        }
+      ]
+    }
+    return data
+  },[displayChartSpeciesByOriginFormat])
+
+  const dataSpeciesByWayCollect = useMemo(() => { 
+    let data = {
+      labels: props.speciesByWayCollect.map(item => item.way_to_collect),
+      datasets: [
+        {
+          data: props.speciesByWayCollect.map(item => displayChartSpeciesByWayCollectFormat ? ((item.total / chartDataSum(props.speciesByWayCollect)) * 100).toFixed(2) : item.total),
+          backgroundColor: ['#22c55e', '#0ea5e9','#f59e0b'],
+        }
+      ]
+    }
+    return data
+  }, [displayChartSpeciesByWayCollectFormat])
+
+  
+
   return (
     <AdminLayout>
       <Head title="Dashboard" />
 
-      <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-5">
         <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
           <div className="text-sm font-medium text-gray-500 truncate">
-            Total users
+            Jumlah Famili
           </div>
           <div className="mt-1 text-3xl font-semibold text-gray-900">
-            12,00
+            {props.totalFamili}
           </div>
         </div>
         <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
           <div className="text-sm font-medium text-gray-500 truncate">
-            Total Profit
+            Jumlah Genus
           </div>
           <div className="mt-1 text-3xl font-semibold text-gray-900">
-            $ 450k
+            {props.totalGenus}
           </div>
         </div>
         <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
           <div className="text-sm font-medium text-gray-500 truncate">
-            Total Orders
+            Jumlah Spesies
           </div>
           <div className="mt-1 text-3xl font-semibold text-gray-900">
-            20k
+            {props.totalSpecies}
+          </div>
+        </div>
+        <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+          <div className="text-sm font-medium text-gray-500 truncate">
+            Jumlah Spesimen
+          </div>
+          <div className="mt-1 text-3xl font-semibold text-gray-900">
+            {props.totalSpecimens}
+          </div>
+        </div>
+        <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+          <div className="text-sm font-medium text-gray-500 truncate">
+            Jumlah Permintaan Data
+          </div>
+          <div className="mt-1 text-3xl font-semibold text-gray-900">
+            {props.totalDataRequests}
           </div>
         </div>
       </div>
@@ -171,14 +226,22 @@ export default function Dashboard(props) {
         <h2 className="text-2xl font-bold">
           Jumlah Tanaman / Asal Koleksi
         </h2>
-        <Chart type="pie" data={chartDataSpeciesByOrigin} options={chartOptionsChartPie} className="w-full md:w-1/3" />
+        <Chart type="pie" data={dataSpeciesByOrigin} options={chartOptionsChartPie} className="w-full md:w-1/3" />
+        <div className='mt-4 text-center'>
+          <p className='mb-3'>Tampilkan dalam persen ( % )</p>
+          <InputSwitch checked={displayChartSpeciesByOriginFormat} onChange={(e) => setDisplayChartSpeciesByOriginFormat(e.value)} />
+        </div>
       </div>
 
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow grid justify-items-center mb-6">
         <h2 className="text-2xl font-bold">
           Jumlah Tanaman / Cara Memperoleh
         </h2>
-        <Chart type="pie" data={chartDataSpeciesByWayCollect} options={chartOptionsChartPie} className="w-full md:w-1/3" />
+        <Chart type="pie" data={dataSpeciesByWayCollect} options={chartOptionsChartPie} className="w-full md:w-1/3" />
+        <div className='mt-4 text-center'>
+          <p className='mb-3'>Tampilkan dalam persen ( % )</p>
+          <InputSwitch checked={displayChartSpeciesByWayCollectFormat} onChange={(e) => setDisplayChartSpeciesByWayCollectFormat(e.value)} />
+        </div>
       </div>
       
     </AdminLayout>
