@@ -55,19 +55,6 @@ export default function Dashboard(props) {
     // setChartDataSpeciesByOrigin(dataSpeciesByOrigin);
     setChartOptionsChartPie(optionsChartPie);
 
-    const dataSpeciesByWayCollect = {
-      labels: props.speciesByWayCollect.map(item => item.way_to_collect),
-      datasets: [
-        {
-          data: props.speciesByWayCollect.map(item => item.total),
-          backgroundColor: generateColors(props.speciesByWayCollect.length),
-        }
-      ]
-    }
-
-    setChartDataSpeciesByWayCollect(dataSpeciesByWayCollect);
-    setChartOptionsChartPie(optionsChartPie);
-
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');

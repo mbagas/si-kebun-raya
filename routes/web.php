@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('species', SpeciesController::class)->only(['create']);
     Route::resource('species', SpeciesController::class)->except(['show']);
+    Route::post('/species/import', [SpeciesController::class, 'import'])->name('species.import');
     
     Route::resource('plants', PlantsController::class);
 

@@ -11,6 +11,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+
 class SpeciesController extends Controller
 {
   /**
@@ -20,11 +22,13 @@ class SpeciesController extends Controller
   {
     //
     $species = Species::with('famili', 'plot')->get();
+    $families = Families::all();
     // $species->famili_name = $species->famili->name;
     // $species->plot_name = $species->plot->name;
     // dd($species);
     return Inertia::render('Species/Species', [
       'species' => $species,
+      'families' => $families,
     ]);
   }
 
@@ -277,5 +281,81 @@ class SpeciesController extends Controller
     } 
     $species->delete();
     return to_route('families.index')->with('message', 'Delete Successfully');
+  }
+
+  public function import(Request $request)
+  {
+    $request->validate([
+      'file' => 'required|mimes:csv,txt',
+    ]);
+    $families = Families::all();
+    $plots = Plots::all();
+    $user = Auth::user();
+    
+    $csvFile = $request->file('file');
+
+    $file = fopen($csvFile->getPathname(), 'r');
+
+    // Read the header row
+    $header = fgetcsv($file, 0, ';');
+
+    // Read the remaining rows
+    $rows = [];
+    while (($line = fgets($file)) !== false) {
+      $row = str_getcsv($line, ';');
+      $rows[] = $row;
+    }
+
+    fclose($file);
+
+    // Remove the first element as it contains the header string
+    // array_shift($rows);
+    // dd($rows);
+    // Process and save the data to the database
+    foreach ($rows as $row) {
+      $data = array_combine($header, $row);
+      $famili = $families->firstWhere('name', $data['famili']);
+      $plot = $plots->where('name', $data['vak'])->where('child_name', $data['anak petak'])->first();
+
+      // Process and save the data to the database
+      // For example, you can insert the data into a "plants" table
+      $species = new Species([
+        'collection_number' => $data['nomor koleksi'],
+        'access_number' => $data['nomor akses'],
+        'collector_number' => $data['nomor kolektor'],
+        'name' => $data['nama spesies'],
+        'genus' => $data['genus'],
+        'local_name' => $data['nama lokal'],
+        'family_id' => $famili->id,
+        'plot_id' => $plot->id,
+        'planting_date' => Carbon::parse($data['tanggal tanam']),
+        'collection_origin' => $data['asal koleksi'],
+        'amount_in_nurseries' => $data['jumlah di pembibitan'],
+        'amount_in_field' => $data['jumlah di lapangan'],
+        'total' => $data['total'],
+        'genus_exist' => $data['terdapat genus'],
+        'type_exist' => $data['terdapat spesies'],
+        'sp_exist' => $data['tidak terdapat spesies'],
+        'planting_coordinate' => $data['koordinat tanam'],
+        'way_to_collect' => $data['cara mendapatkan'],
+        'user_id' => $user->id,
+
+      ]);
+      $species->save();
+    }
+
+      // Associate the post with the user
+      // $species->user()->associate($user);
+
+      // Save the post to the database
+      try {
+        // dd($species);
+        
+        return back()->with('message', 'Import Successful');
+      } catch (\Exception $e) {
+        // Handle any errors that occur during the import process
+        return back()->with('error', 'Error Importing CSV');
+      }
+
   }
 }

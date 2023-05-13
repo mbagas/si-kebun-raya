@@ -10,10 +10,12 @@ import { read, utils, writeFileXLSX } from 'xlsx';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import InputLabel from '@/Components/InputLabel';
+// import route from "vendor/tightenco/ziggy/src/js";
 
 export default function Species(props) {
   const [loading, setLoading] = useState(false);
   const [exportVisible, setExportVisible] = useState(false);
+  const [importCsvVisible, setImportCsvVisible] = useState(false);
   const [filters, setFilters] = useState({
     access_number: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -23,44 +25,48 @@ export default function Species(props) {
     planting_date: { value: null, matchMode: FilterMatchMode.CONTAINS },
   })
   const [filteredData, setFilteredData] = useState();
-  const [listAsalKoleksi, setListAsalKoleksi] = useState('Semua');
+  const [listAsalKoleksi, setListAsalKoleksi] = useState([
+    'Semua', ...new Set(props.species.map((obj) => obj.collection_origin)),
+  ]);
+  const [listGenus, setListGenus] = useState([
+    'Semua', ...new Set(props.species.map((obj) => obj.genus)),
+  ]);
   const [filterByAsal, setFilterByAsal] = useState('Semua');
   const [filterByCara, setFilterByCara] = useState('Semua');
-  
+  const [filterByFamili, setFilterByFamili] = useState('Semua');
+  const [filterByGenus, setFilterByGenus] = useState('Semua');
+
 
   useEffect(() => {
-    setListAsalKoleksi([
-      filterByAsal,...new Set(props.species.map((obj) => obj.collection_origin)),
-    ]);
-    
 
     const items = props.species.map((item) => ({
-      'Nomor Koleksi' : item.collection_number,
-      'Nomor Akses' : item.access_number,
-      'Nomor Kolektor' : item.collector_number,
-      'Nama Spesies' : item.genus + ' ' + item.name,
-      'Nama Lokal' : item.local_name,
-      'Famili' : item.famili.name,
-      'Tanggal Tanam' : item.planting_date,
-      'Asal Koleksi' : item.collection_origin,
-      'Jumlah di Pembibitan' : item.amount_in_nurseries,
-      'Jumlah di Lapangan' : item.amount_in_field,
-      'Total' : item.total,
-      'Marga' : item.genus_exist,
-      'Jenis' : item.type_exist,
-      'sp' : item.sp_exist,
-      'Lokasi Tanam' : item.planting_coordinate,
+      'Nomor Koleksi': item.collection_number,
+      'Nomor Akses': item.access_number,
+      'Nomor Kolektor': item.collector_number,
+      'Nama Spesies': item.genus + ' ' + item.name,
+      'Nama Lokal': item.local_name,
+      'Famili': item.famili.name,
+      'Tanggal Tanam': item.planting_date,
+      'Asal Koleksi': item.collection_origin,
+      'Jumlah di Pembibitan': item.amount_in_nurseries,
+      'Jumlah di Lapangan': item.amount_in_field,
+      'Total': item.total,
+      'Marga': item.genus_exist,
+      'Jenis': item.type_exist,
+      'sp': item.sp_exist,
+      'Lokasi Tanam': item.planting_coordinate,
       'Cara Mendapatkan': item.way_to_collect,
     }));
 
     setFilteredData(items);
-    
+
   }, [loading])
 
   const {
     data,
     setData,
     delete: destroy,
+    post,
     processing,
     reset,
     errors,
@@ -69,40 +75,45 @@ export default function Species(props) {
   });
 
   const exportExcel = useCallback(() => {
-    console.log(filterByAsal, filterByCara)
+    console.log(filterByFamili, filterByGenus, filterByCara, filterByAsal)
     console.log(filteredData.filter((item) => {
-      if (filterByAsal == 'Semua' && filterByCara == 'Semua') {
-        console.log(item['Asal Koleksi']);
-        return true;
-      } else if (filterByAsal != 'Semua' && filterByCara == 'Semua') {
-        console.log(item['Asal Koleksi']);
-        return item['Asal Koleksi'].includes(filterByAsal);
-      } else if (filterByAsal == 'Semua' && filterByCara != 'Semua') {
-        console.log(item['Cara Mendapatkan']);
-        return item['Cara Mendapatkan'].includes(filterByCara);
-      } else {
-        return item['Asal Koleksi'].includes(filterByAsal) && item['Cara Mendapatkan'].includes(filterByCara)
+
+      if (filterByFamili && item['Famili'] !== filterByFamili && filterByFamili !== 'Semua') {
+        return false;
       }
-      return false;
+      if (filterByGenus && !item['Nama Spesies'].toLowerCase().includes(filterByGenus.toLowerCase()) && filterByGenus !== 'Semua') {
+        return false;
+      }
+      if (filterByAsal && item['Asal Koleksi'] !== filterByAsal && filterByAsal !== 'Semua') {
+        return false;
+      }
+      if (filterByCara && item['Cara Mendapatkan'] !== filterByCara && filterByCara !== 'Semua') {
+        return false
+      }
+      return true;
+
     }))
     const ws = utils.json_to_sheet(filteredData.filter((item) => {
-      if (filterByAsal == 'Semua' && filterByCara == 'Semua') {
-        console.log(item['Asal Koleksi']);
-        return true;
-      } else if (filterByAsal != 'Semua' && filterByCara == 'Semua') {
-        console.log(item['Asal Koleksi']);
-        return item['Asal Koleksi'].includes(filterByAsal);
-      } else if (filterByAsal == 'Semua' && filterByCara != 'Semua') {
-        return item['Cara Mendapatkan'].includes(filterByCara);
-      } else {
-        return item['Asal Koleksi'].includes(filterByAsal) && item['Cara Mendapatkan'].includes(filterByCara)
+
+      if (filterByFamili && item['Famili'] !== filterByFamili && filterByFamili !== 'Semua') {
+        return false;
       }
-      return false;
+      if (filterByGenus && !item['Nama Spesies'].toLowerCase().includes(filterByGenus.toLowerCase()) && filterByGenus !== 'Semua') {
+        return false;
+      }
+      if (filterByAsal && item['Asal Koleksi'] !== filterByAsal && filterByAsal !== 'Semua') {
+        return false;
+      }
+      if (filterByCara && item['Cara Mendapatkan'] !== filterByCara && filterByCara !== 'Semua') {
+        return false
+      }
+      return true;
+
     }));
     const wb = utils.book_new();
     utils.book_append_sheet(wb, ws, "Data");
     writeFileXLSX(wb, "exportExcel.xlsx");
-  }, [filteredData, filterByAsal, filterByCara])
+  }, [filteredData, filterByAsal, filterByCara, filterByFamili, filterByGenus])
 
   const renderHeader = () => {
     return (
@@ -111,8 +122,12 @@ export default function Species(props) {
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
         <div className="ml-4">
-          <Button onClick={() => setExportVisible(true)} icon="pi pi-file-excel" label="Export Excel"/>
+          <Button onClick={() => setImportCsvVisible(true)} icon="pi pi-file-excel" label="Import CSV" />
         </div>
+        <div className="ml-4">
+          <Button onClick={() => setExportVisible(true)} icon="pi pi-file-excel" label="Export Excel" />
+        </div>
+
       </div>
     );
   };
@@ -139,7 +154,13 @@ export default function Species(props) {
     </div>;
   }
 
-  
+  const importCSV = (e) => {
+    e.preventDefault();
+
+    post(route('species.import'));
+  }
+
+
 
   return (
     <AdminLayout>
@@ -164,23 +185,124 @@ export default function Species(props) {
           </DataTable>
         </div>
       </div>
-      
+
       <Dialog header={'Export data spesies'} visible={exportVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setExportVisible(false)}>
+        <div className="mt-4">
+          <InputLabel htmlFor="name" value="Filter Famili" />
+
+          <Dropdown value={filterByFamili} onChange={(e) => { setFilterByFamili(e.value) }} options={['Semua', ...props.families.map((item) => item.name)]}
+            placeholder="Select a Famili" className="w-full md:w-14rem" />
+        </div>
+        <div className="mt-4">
+          <InputLabel htmlFor="name" value="Filter Genus" />
+
+          <Dropdown value={filterByGenus} onChange={(e) => { setFilterByGenus(e.value) }} options={listGenus}
+            placeholder="Select a Genus" className="w-full md:w-14rem" />
+        </div>
         <div className="mt-4">
           <InputLabel htmlFor="name" value="Filter Asal Koleksi" />
 
-          <Dropdown value={filterByAsal} onChange={(e) => {setFilterByAsal(e.value)}} options={listAsalKoleksi} 
+          <Dropdown value={filterByAsal} onChange={(e) => { setFilterByAsal(e.value) }} options={listAsalKoleksi}
             placeholder="Select a Famili" className="w-full md:w-14rem" />
         </div>
         <div className="mt-4">
           <InputLabel htmlFor="wayToCollect" value="Filter Cara Mendapatkan" />
 
-          <Dropdown value={filterByCara} onChange={(e) => setFilterByCara(e.value)} options={['Semua', 'hibah' ,'eksplorasi' ,'pertukaran' ]}
+          <Dropdown value={filterByCara} onChange={(e) => setFilterByCara(e.value)} options={['Semua', 'hibah', 'eksplorasi', 'pertukaran']}
             placeholder="Select status" className="w-full md:w-14rem" />
         </div>
-        <div className="mt-4">
-          <Button onClick={exportExcel} label="Export"/>
+        <div className="flex items-center justify-end mt-4">
+          <Button onClick={exportExcel} label="Export" />
         </div>
+      </Dialog>
+
+      <Dialog header={'Export data spesies dengan CSV'} visible={importCsvVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setImportCsvVisible(false)}>
+        <form onSubmit={importCSV}>
+          <div className="mt-4">
+            <InputLabel htmlFor="image" value="File CSV" />
+
+            <input
+              type="file"
+              className="block w-full text-sm text-slate-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100"
+              label="File"
+              name="file"
+              onChange={(e) => {
+                setData("file", e.target.files[0]);
+              }
+              }
+              accept=".csv"
+            />
+          </div>
+          <div className="mt-4">
+            <p>
+              <i className="italic font-semibold">note :</i>
+              <ul className="list-disc ml-6">
+                <li>File csv harus sesuai dengan format yang telah ditentukan</li>
+                <li>Data Famili dan VAK beserta anak petak yang blum tedaftar pada master data harus diinputkan terlebih dahulu pada master data</li>
+                <li>
+                  <p>Contoh format CSV : </p>
+                  <table className="border-collapse border border-black w-full">
+                    <thead>
+                      <th className="border border-black p-1">nomor koleksi</th>
+                      <th className="border border-black p-1">nomor akses</th>
+                      <th className="border border-black p-1">nomor kolektor</th>
+                      <th className="border border-black p-1">nama spesies</th>
+                      <th className="border border-black p-1">genus</th>
+                      <th className="border border-black p-1">nama lokal</th>
+                      <th className="border border-black p-1">famili</th>
+                      <th className="border border-black p-1">vak</th>
+                      <th className="border border-black p-1">anak petak</th>
+                      <th className="border border-black p-1">tanggal tanam</th>
+                      <th className="border border-black p-1">asal koleksi</th>
+                      <th className="border border-black p-1">jumlah di pembibitan</th>
+                      <th className="border border-black p-1">jumlah di lapangan</th>
+                      <th className="border border-black p-1">total</th>
+                      <th className="border border-black p-1">terdapat genus</th>
+                      <th className="border border-black p-1">terdapat spesies</th>
+                      <th className="border border-black p-1">tidak terdapat spesies</th>
+                      <th className="border border-black p-1">koordinat tanam</th>
+                      <th className="border border-black p-1">cara mendapatkan</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-black p-1">1</td>
+                        <td className="border border-black p-1">IT2021120013</td>
+                        <td className="border border-black p-1">DM. 3366</td>
+                        <td className="border border-black p-1">palembanica</td>
+                        <td className="border border-black p-1">Intsia</td>
+                        <td className="border border-black p-1">Merbau</td>
+                        <td className="border border-black p-1">Fabaceae</td>
+                        <td className="border border-black p-1">V</td>
+                        <td className="border border-black p-1">A</td>
+                        <td className="border border-black p-1">22 Juli 2020</td>
+                        <td className="border border-black p-1">Kebun Raya Bogor</td>
+                        <td className="border border-black p-1">4</td>
+                        <td className="border border-black p-1">0</td>
+                        <td className="border border-black p-1">4</td>
+                        <td className="border border-black p-1">1</td>
+                        <td className="border border-black p-1">1</td>
+                        <td className="border border-black p-1">0</td>
+                        <td className="border border-black p-1">"-5.36578 105.30878" "-5.36586 105.30869"</td>
+                        <td className="border border-black p-1">Hibah</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </li>
+              </ul>
+
+            </p>
+          </div>
+          <div className="flex items-center justify-end mt-4">
+            <Button type="submit" label="Import" />
+          </div>
+        </form>
+
       </Dialog>
     </AdminLayout>
   )
