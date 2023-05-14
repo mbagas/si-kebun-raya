@@ -6,6 +6,7 @@ export default function Guest({ children }) {
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-100">
             <div>
                 <Link href="/">
+                  <img className='mx-auto' src="/logo-kebun.png" alt="Logo" width="100" height="100" />
             <h2 className="text-2xl font-bold">KEBUN RAYA ITERA</h2>
                 </Link>
             </div>

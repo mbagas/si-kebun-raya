@@ -15,12 +15,12 @@ export default function Dashboard(props) {
   const [displayChartSpeciesByWayCollectFormat, setDisplayChartSpeciesByWayCollectFormat] = useState(false); //false = number , true = percent
   
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const years = [new Set(props.speciesByTime.map(item => item.year))];
+  const years = [...new Set(props.speciesByTime.map(item => item.year))];
   const [chartDataSpeciesByTime, setChartDataSpeciesByTime] = useState({});
   const [chartOptionsChartLine, setChartOptionsChartline] = useState({});
 
   
-  console.log(selectedYear);
+  console.log(selectedYear, years);
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'

@@ -58,6 +58,11 @@ export default function AddSpecies(props) {
     // }))
   };
   console.log(data);
+
+  const plotList = props.plots.map((item) => ({
+    ...item,
+    optionName: item.name + ' - ' + item.child_name,
+  }))
   return (
     <AdminLayout>
       <Head title="Add Species" />
@@ -173,7 +178,7 @@ export default function AddSpecies(props) {
         <div>
           <InputLabel htmlFor="plotId" value="Petak" />
 
-          <Dropdown value={data.plotId} optionValue="id" onChange={(e) => setData('plotId', e.value)} options={props.plots} optionLabel="name"
+          <Dropdown value={data.plotId} optionValue="id" onChange={(e) => setData('plotId', e.value)} options={plotList} optionLabel="optionName"
             placeholder="Select a Petak" filter className="w-full md:w-14rem" />
 
           <InputError message={errors.plotId} className="mt-2" />

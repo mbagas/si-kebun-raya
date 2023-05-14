@@ -172,7 +172,7 @@ export default function AddSpecies(props) {
                   size={150}
                   level={"H"}
                   imageSettings={{
-                    src: "https://static.zpao.com/favicon.png",
+                    src: "/logo-kebun.png",
                     x: undefined,
                     y: undefined,
                     height: 24,

@@ -31,8 +31,8 @@ class DashboardController extends Controller
       ->get();
 
       // need to update this to planting_date
-    $plantsByTime = Plants::select( DB::raw('YEAR(created_at) as year'),DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total') )
-      ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
+    $plantsByTime = Plants::select( DB::raw('YEAR(planting_date) as year'),DB::raw('MONTH(planting_date) as month'), DB::raw('count(*) as total') )
+      ->groupBy(DB::raw('YEAR(planting_date)'), DB::raw('MONTH(planting_date)'))
       ->get(); 
 
     $totalFamili = Families::count();

@@ -21,6 +21,12 @@ export default function BukuKebun(props) {
     content: () => componentRef.current,
     documentTitle: "AwesomeFileName",
   });
+  console.log(selectedPlot);
+
+  const plotList = props.plots.map((item) => ({
+    ...item,
+    optionName : item.name + ' - ' + item.child_name,
+  }))
 
   return (
     <AdminLayout>
@@ -32,7 +38,7 @@ export default function BukuKebun(props) {
         <div>
           <InputLabel htmlFor="name" value="Pilih Petak" />
 
-          <Dropdown value={selectedPlot} onChange={(e) => setSelectedPlot(e.value)} options={props.plots} optionLabel="name"
+          <Dropdown value={selectedPlot} onChange={(e) => setSelectedPlot(e.value)} options={plotList} optionLabel="optionName"
             placeholder="Select a Petak" className="w-full md:w-14rem" />
         </div>
         <div>

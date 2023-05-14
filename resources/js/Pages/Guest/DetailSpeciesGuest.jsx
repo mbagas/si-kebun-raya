@@ -6,6 +6,11 @@ import { Head } from "@inertiajs/react";
 
 export default function DetailSpeciesGuest(props) {
   console.log(props);
+
+  const handleImageError = (event) => {
+    event.target.src = '/no_image.jpg';
+  };
+
   return (
     <GuestsLayout>
       <div className="grid grid-rows-auto justify-items-center gap-y-4">
@@ -13,7 +18,8 @@ export default function DetailSpeciesGuest(props) {
         <div>
           <div className="shadow-lg md:w-64 rounded-md m-8 flex flex-col gap-3 h-auto justify-center bg-white">
             <div className="h-auto justify-self-center text-center">
-              <Image src={props.species.image[0]} alt="Image" width="100%" preview />
+              {/* <Image src={props.species.image[0]} onError={handleImageError} alt="Image" width="100%" preview /> */}
+              <Image className="object-fill" src={props.species.image[0]} onError={handleImageError} alt="Image" width="100%" preview />
             </div>
             <div className="h-auto justify-self-center text-center mb-4">
               <h2 className="text-base font-semibold">

@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
+import { Image } from 'primereact/image';
 export default function Sidebar({ children }) {
   const [open, setOpen] = useState(false);
   const [collapse, setCollapse] = useState(false);
   return (
     <>
-      <div className="w-screen px-5 py-2 grid grid-cols-2 border-b-2 border-gray-300">
-        <div>
-          <h2 className="text-2xl font-bold">Kebun raya ITERA</h2> 
+      <div className="w-screen px-5 py-2 flex justify-between border-b-2 border-gray-300">
+        <div className="flex gap-4">
+          <div className="">
+            <img src="/logo-kebun.png" style={{
+              width: '3rem',
+              height: 'auto',
+              }} alt="Image" />
+          </div>
+          <h2 className="text-2xl font-bold inline-block align-middle my-auto">Kebun Raya ITERA</h2> 
         </div>
-        <div className="text-end">
+        <div className="text-end my-auto ">
           <button onClick={() => setCollapse(!collapse)} className="visible lg:invisible lg:w-0 right-0">
             <i className="pi pi-align-justify" style={{ fontSize: '1.5rem' }}></i>
           </button>

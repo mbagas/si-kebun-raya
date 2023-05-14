@@ -54,7 +54,7 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
 
         <div className="">
           <h4 className="text-l font-bold">VAK : {props.data.name}</h4>
-          <h4 className="text-l font-bold">PETAK/ ANAK PETAK : {props.data.name} "{props.data.latitude} {props.data.longitude}"</h4>
+          <h4 className="text-l font-bold">PETAK/ ANAK PETAK : {props.data.name} {props.data.child_name} "{props.data.latitude} {props.data.longitude}"</h4>
         </div>
 
         <div>
