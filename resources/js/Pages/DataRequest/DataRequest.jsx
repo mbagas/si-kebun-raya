@@ -25,20 +25,22 @@ export default function DataRequest(props) {
   return (
     <AdminLayout>
       <Head title="Permintaan Data" />
-      <h2 className="text-2xl font-bold">
-        Permintaan Data
-      </h2>
-      <div className="mt-2">
-        <DataTable value={props.dataRequest} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['name', 'email','institute']} emptyMessage="No data found."
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
-          <Column field="institute" header="Institusi" filter filterPlaceholder="Search by institute" sortable style={{ minWidth: '12rem' }} />
-          <Column field="status" header="Status" filter filterPlaceholder="Search by status" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
-        </DataTable>
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+        <h2 className="text-2xl font-bold">
+          Permintaan Data
+        </h2>
+        <div className="mt-2">
+          <DataTable value={props.dataRequest} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+            globalFilterFields={['name', 'email', 'institute']} emptyMessage="No data found."
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
+            <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+            <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
+            <Column field="institute" header="Institusi" filter filterPlaceholder="Search by institute" sortable style={{ minWidth: '12rem' }} />
+            <Column field="status" header="Status" filter filterPlaceholder="Search by status" sortable style={{ minWidth: '12rem' }} />
+            <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
+          </DataTable>
+        </div>
       </div>
     </AdminLayout>
   )

@@ -61,20 +61,22 @@ export default function Plot(props) {
   return (
     <AdminLayout>
       <Head title="Petak" />
-      <h2 className="text-2xl font-bold">
-        Petak
-      </h2>
-      <div className="mt-2">
-        <DataTable value={props.plots} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['name', 'latitude', 'longitude']} header={header} emptyMessage="No data found."
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="name" header="VAK" filter filterPlaceholder="Search by VAK" sortable style={{ minWidth: '12rem' }} />
-          <Column field="child_name" header="Anak Petak" filter filterPlaceholder="Search by Anak Petak" sortable style={{ minWidth: '12rem' }} />
-          <Column field="latitude" header="Latitude" filter filterPlaceholder="Search by latitude" sortable style={{ minWidth: '12rem' }} />
-          <Column field="longitude" header="Longitude" filter filterPlaceholder="Search by longitude" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
-        </DataTable>
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+        <h2 className="text-2xl font-bold">
+          Petak
+        </h2>
+        <div className="mt-2">
+          <DataTable value={props.plots} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+            globalFilterFields={['name', 'latitude', 'longitude']} header={header} emptyMessage="No data found."
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
+            <Column field="name" header="VAK" filter filterPlaceholder="Search by VAK" sortable style={{ minWidth: '12rem' }} />
+            <Column field="child_name" header="Anak Petak" filter filterPlaceholder="Search by Anak Petak" sortable style={{ minWidth: '12rem' }} />
+            <Column field="latitude" header="Latitude" filter filterPlaceholder="Search by latitude" sortable style={{ minWidth: '12rem' }} />
+            <Column field="longitude" header="Longitude" filter filterPlaceholder="Search by longitude" sortable style={{ minWidth: '12rem' }} />
+            <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
+          </DataTable>
+        </div>
       </div>
     </AdminLayout>
   )

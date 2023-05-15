@@ -60,17 +60,21 @@ export default function Famili(props) {
   return (
     <AdminLayout>
       <Head title="famili" />
-      <h2 className="text-2xl font-bold">
-        Famili
-      </h2>
-      <div className="mt-2">
-        <DataTable value={props.families} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-          globalFilterFields={['name', 'genus']} header={header} emptyMessage="No data found."
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
-          <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
-          <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
-        </DataTable>
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
+
+
+        <h2 className="text-2xl font-bold">
+          Famili
+        </h2>
+        <div className="mt-2">
+          <DataTable value={props.families} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+            globalFilterFields={['name', 'genus']} header={header} emptyMessage="No data found."
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
+            <Column field="name" header="Name" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '12rem' }} />
+            <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
+          </DataTable>
+        </div>
       </div>
     </AdminLayout>
   )

@@ -66,8 +66,11 @@ export default function AddSpecies(props) {
   return (
     <AdminLayout>
       <Head title="Add Species" />
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
+
+      
       <h2 className="text-2xl font-bold">
-        Tambah Species
+        Edit Species
       </h2>
       <form onSubmit={submit}>
         <div>
@@ -297,6 +300,7 @@ export default function AddSpecies(props) {
           </PrimaryButton>
         </div>
       </form>
+      </div>
     </AdminLayout>
   )
 }

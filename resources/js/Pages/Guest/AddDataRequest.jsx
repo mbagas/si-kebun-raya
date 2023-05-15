@@ -148,7 +148,7 @@ export default function AddDataRequest(props) {
           <form onSubmit={submit}>
             <Toast ref={toast} />
             <div className="mt-4">
-              <InputLabel htmlFor="name" value="Name" />
+              <InputLabel htmlFor="name" value="Name*" />
 
               <TextInput
                 id="name"
@@ -164,7 +164,7 @@ export default function AddDataRequest(props) {
               <InputError message={errors.name} className="mt-2" />
             </div>
             <div className="mt-4">
-              <InputLabel htmlFor="name" value="Email" />
+              <InputLabel htmlFor="name" value="Email*" />
 
               <TextInput
                 id="email"
@@ -181,7 +181,7 @@ export default function AddDataRequest(props) {
               <InputError message={errors.name} className="mt-2" />
             </div>
             <div className="mt-4">
-              <InputLabel htmlFor="name" value="Institusi" />
+              <InputLabel htmlFor="name" value="Institusi*" />
 
               <TextInput
                 id="institute"
@@ -232,7 +232,7 @@ export default function AddDataRequest(props) {
 
 
             <div className="mt-4">
-              <InputLabel htmlFor="reason" value="Alasan" />
+              <InputLabel htmlFor="reason" value="Alasan*" />
 
               <InputTextarea className="w-full" name="reason" autoResize value={data.reason} onChange={handleOnChange} rows={5} cols={90} />
 

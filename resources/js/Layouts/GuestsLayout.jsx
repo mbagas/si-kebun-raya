@@ -31,12 +31,20 @@ export function GuestsLayout({children}) {
     <>
       <div className="w-100 bg-slate-100 min-h-screen">
         <div className="w-full px-5 py-2 grid grid-cols-1 border-b-2 border-gray-300 bg-white justify-items-center">
-          <div className="w-full md:w-4/5 grid grid-cols-1 md:grid-cols-2 justify-self-center">
+          <div className="w-full md:w-4/5 flex justify-between">
             <div className="text-center md:text-start">
-              <h2 className="text-2xl font-bold">Kebun raya ITERA</h2> 
+              <div className="flex gap-4 justify-center">
+                <div className="">
+                  <img src="/logo-kebun.png" style={{
+                    width: '3rem',
+                    height: 'auto',
+                  }} alt="Image" />
+                </div>
+                <h2 className="text-2xl font-bold inline-block align-middle my-auto">Kebun Raya ITERA</h2>
+              </div>
             </div>
-            <div className="text-end">
-              <span className="text-end invisible md:visible lg:w-0 right-0">
+            <div className="text-end flex-initial w-16 md:w-auto my-auto">
+              <span className="text-end hidden md:block right-0 ">
                 <Link href={'/'} className="mr-5">Home</Link>
                 <Link href={route('data-request.create')}>Date Request</Link>
               </span>
@@ -44,9 +52,11 @@ export function GuestsLayout({children}) {
                 <i className="pi pi-align-justify" style={{ fontSize: '1.5rem' }}></i>
               </button> */}
 
-              <Toast ref={toast}></Toast>
-              <Menu model={items} popup ref={menu} />
-              <Button icon="pi pi-bars" className="visible md:invisible lg:w-0 right-0" severity="secondary" onClick={(e) => menu.current.toggle(e)} />
+              <span className="block md:hidden lg:w-0 right-0">
+                <Toast ref={toast}></Toast>
+                <Menu model={items} popup ref={menu} />
+                <Button icon="pi pi-bars" size="small" rounded text raised  severity="secondary" onClick={(e) => menu.current.toggle(e)} />
+              </span>
             </div>
           </div>
           

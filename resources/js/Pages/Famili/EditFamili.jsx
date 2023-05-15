@@ -25,36 +25,40 @@ export default function AddFamili(props) {
   return (
     <AdminLayout>
       <Head title="Add famili" />
-      <h2 className="text-2xl font-bold">
-        Edit famili
-      </h2>
-      <form onSubmit={submit}>
-        <div>
-          <InputLabel htmlFor="name" value="Name" />
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
 
-          <TextInput
-            id="name"
-            name="name"
-            value={data.name}
-            className="mt-1 block w-full"
-            autoComplete="name"
-            isFocused={true}
-            onChange={handleOnChange}
-            required
-          />
 
-          <InputError message={errors.name} className="mt-2" />
-        </div>
+        <h2 className="text-2xl font-bold">
+          Edit famili
+        </h2>
+        <form onSubmit={submit}>
+          <div>
+            <InputLabel htmlFor="name" value="Name" />
 
-        
+            <TextInput
+              id="name"
+              name="name"
+              value={data.name}
+              className="mt-1 block w-full"
+              autoComplete="name"
+              isFocused={true}
+              onChange={handleOnChange}
+              required
+            />
 
-        <div className="flex items-center justify-end mt-4">
+            <InputError message={errors.name} className="mt-2" />
+          </div>
 
-          <PrimaryButton className="ml-4" disabled={processing}>
-            Save
-          </PrimaryButton>
-        </div>
-      </form>
+
+
+          <div className="flex items-center justify-end mt-4">
+
+            <PrimaryButton className="ml-4" disabled={processing}>
+              Save
+            </PrimaryButton>
+          </div>
+        </form>
+      </div>
     </AdminLayout>
   )
 }

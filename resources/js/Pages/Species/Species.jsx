@@ -165,7 +165,7 @@ export default function Species(props) {
   return (
     <AdminLayout>
       <Head title="species" />
-      <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">
           species
         </h2>
