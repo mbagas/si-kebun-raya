@@ -24,7 +24,7 @@ export default function DetailDataRequest(props) {
 
   useEffect(() => {
     console.log(data);
-    if (data.status != 'Pending') {
+    if (data.status != 'Pending' && props.dataRequest.token == null && props.dataRequest.decline_reason == null) {
       patch(route('data-request.update', props.dataRequest.id), {
         preserveScroll: true,
       });
@@ -142,7 +142,7 @@ export default function DetailDataRequest(props) {
           </div>
 
           {
-            props.dataRequest.status === 'Ditolak' ? (
+            props.dataRequest.status === 'Ditolak' && props.dataRequest.status != 'Pending' ? (
               <div className="grid grid-cols-3 gap-x-2">
                 <div>
                   <label className="font-medium text-sm text-gray-700">
@@ -155,7 +155,20 @@ export default function DetailDataRequest(props) {
                   </label>
                 </div>
               </div>
-            ) : ''
+            ) : (
+                <div className="grid grid-cols-3 gap-x-2">
+                  <div>
+                    <label className="font-medium text-sm text-gray-700">
+                      Token :
+                    </label>
+                  </div>
+                  <div className="col-span-2">
+                    <label className="font-medium text-sm text-gray-700">
+                      {props.dataRequest.token}
+                    </label>
+                  </div>
+                </div>
+            )
           }
 
 

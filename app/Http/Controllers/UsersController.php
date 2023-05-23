@@ -85,18 +85,28 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProfileUpdateRequest $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
-        // dd($request);
-        $request->user()->fill($request->validated());
+    //
+    // dd($request);
+    // $request->user()->fill($request->validated());
 
-        if($request->user()->isDirty('email'))
-        {
-          $request->user()->email_verified_at = null;
-        }
+    // if($request->user()->isDirty('email'))
+    // {
+    //   $request->user()->email_verified_at = null;
+    // }
 
-        $request->user()->save();
+    // $request->user()->save();
+        $request->validate([
+          'name' => 'required|string|max:255',
+          'email' => 'required|string|email',
+          'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $user->update([
+          'name' => $request->name,
+          'email' => $request->email,
+          'password' => Hash::make($request->password),
+        ]);
 
         return to_route('user.index')->with('message','Update Successfully');
     }

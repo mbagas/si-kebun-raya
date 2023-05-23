@@ -63,6 +63,11 @@ export default function AddSpecies(props) {
     ...item,
     optionName: item.name + ' - ' + item.child_name,
   }))
+
+  const handleImageError = (event) => {
+    event.target.src = '/no_image.jpg';
+  };
+
   return (
     <AdminLayout>
       <Head title="Add Species" />
@@ -73,7 +78,7 @@ export default function AddSpecies(props) {
         Edit Species
       </h2>
       <form onSubmit={submit}>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="collectionNumber" value="Nomor Koleksi" />
 
           <TextInput
@@ -89,7 +94,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.collectionNumber} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="accessNumber" value="Nomor Akses" />
 
           <TextInput
@@ -105,7 +110,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.accessNumber} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="collectorNumber" value="Nomor Kolektor" />
 
           <TextInput
@@ -136,7 +141,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.genus} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="name" value="Nama Spesies" />
 
           <TextInput
@@ -153,7 +158,7 @@ export default function AddSpecies(props) {
           <InputError message={errors.name} className="mt-2" />
         </div>
         
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="localName" value="Nama Lokal Spesies" />
 
           <TextInput
@@ -169,7 +174,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.localName} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="familyId" value="Famili" />
 
           <Dropdown value={data.familyId} optionValue="id" onChange={(e) => setData('familyId', e.value)} options={props.families} optionLabel="name"
@@ -178,7 +183,7 @@ export default function AddSpecies(props) {
           <InputError message={errors.familyId} className="mt-2" />
         </div>
 
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="plotId" value="Petak" />
 
           <Dropdown value={data.plotId} optionValue="id" onChange={(e) => setData('plotId', e.value)} options={plotList} optionLabel="optionName"
@@ -186,7 +191,7 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.plotId} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="plantingDate" value="Tanggal Tanam" />
 
           <Calendar value={new Date(data.plantingDate)} onChange={(e) => setData('plantingDate',  e.value)} dateFormat="yy-mm-dd" />
@@ -194,7 +199,7 @@ export default function AddSpecies(props) {
           <InputError message={errors.name} className="mt-2" />
         </div>
 
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="collectionOrigin" value="Asal Koleksi" />
 
           <TextInput
@@ -210,28 +215,28 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.collectionOrigin} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="amountInNurseries" value="Jumlah di Pembibitan" />
 
           <InputNumber name="amountInNurseries" value={data.amountInNurseries} onValueChange={handleOnChange} />
 
           <InputError message={errors.amountInNurseries} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="amountInField" value="Jumlah di Lapangan" />
 
           <InputNumber name="amountInField" value={data.amountInField} onValueChange={handleOnChange} />
 
           <InputError message={errors.amountInField} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="total" value="Total" />
 
           <InputNumber name="total" value={data.total = data.amountInNurseries + data.amountInField} disabled onValueChange={handleOnChange} />
 
           <InputError message={errors.total} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="plantingCoordinate" value="Lokasi Koordinat Tanam" />
 
           <TextInput
@@ -246,9 +251,9 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.plantingCoordinate} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="image" value="Gambar Tanaman" />
-          <Image src={props.species.image[0]} alt="Image" width="250" preview />
+            <Image src={props.species.image[0]} onError={handleImageError} alt="Image" width="250" preview />
           <input
             type="file"
             className="block w-full text-sm text-slate-500
@@ -269,14 +274,14 @@ export default function AddSpecies(props) {
 
           <InputError message={errors.image} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="description" value="Deskripsi" />
 
           <InputTextarea name="description" autoResize value={data.description} onChange={handleOnChange} rows={5} cols={90} />
 
           <InputError message={errors.description} className="mt-2" />
         </div>
-        <div>
+          <div className="mt-4">
           <InputLabel htmlFor="benefit" value="Manfaat" />
 
           <InputTextarea name="benefit" autoResize value={data.benefit} onChange={handleOnChange} rows={5} cols={90} />
@@ -287,7 +292,7 @@ export default function AddSpecies(props) {
           <InputLabel htmlFor="wayToCollect" value="Cara Mendapatkan" />
 
           <Dropdown value={data.wayToCollect} optionValue="name" onChange={(e) => setData('wayToCollect', e.value)} options={[{ name: 'hibah' }, { name: 'eksplorasi' }, { name: 'pertukaran' }]} optionLabel="name"
-            placeholder="Select status" className="w-full md:w-14rem" />
+            placeholder="Select Cara Mendapatkan" className="w-full md:w-14rem" />
 
           <InputError message={errors.wayToCollect} className="mt-2" />
         </div>

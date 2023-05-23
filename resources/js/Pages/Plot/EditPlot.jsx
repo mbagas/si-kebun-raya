@@ -33,7 +33,7 @@ export default function EditPlot(props) {
           Edit Petak
         </h2>
         <form onSubmit={submit}>
-          <div>
+          <div className="mt-4">
             <InputLabel htmlFor="name" value="VAK" />
 
             <TextInput
@@ -49,7 +49,7 @@ export default function EditPlot(props) {
 
             <InputError message={errors.name} className="mt-2" />
           </div>
-          <div>
+          <div className="mt-4">
             <InputLabel htmlFor="name" value="Anak Petak" />
 
             <TextInput

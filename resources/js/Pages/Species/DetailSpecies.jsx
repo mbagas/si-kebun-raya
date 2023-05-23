@@ -431,7 +431,7 @@ export default function AddSpecies(props) {
               <Column field="access_number" header="No Akses" filter filterPlaceholder="Search by access_number" sortable style={{ minWidth: '12rem' }} />
               <Column field="coordinate" header="Koordinat" filter filterPlaceholder="Search by coordinate" sortable style={{ minWidth: '12rem' }} />
               <Column field="status" header="Status" filter filterPlaceholder="Search by status" sortable style={{ minWidth: '12rem' }} />
-              <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '12rem' }} />
+              <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '9rem' }} />
             </DataTable>
           </div>
 

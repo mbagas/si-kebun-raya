@@ -18,8 +18,8 @@ export default function Species(props) {
   const [importCsvVisible, setImportCsvVisible] = useState(false);
   const [filters, setFilters] = useState({
     access_number: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    genus: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    local_name: { value: null, matchMode: FilterMatchMode.CONTAINS },
     famili: { value: null, matchMode: FilterMatchMode.CONTAINS },
     collection_origin: { value: null, matchMode: FilterMatchMode.CONTAINS },
     planting_date: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -121,9 +121,9 @@ export default function Species(props) {
         <Link href={route('species.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
-        <div className="ml-4">
-          <Button onClick={() => setImportCsvVisible(true)} icon="pi pi-file-excel" label="Import CSV" />
-        </div>
+        {/* <div className="ml-4">
+          <Button onClick={() => setImportCsvVisible(true)} icon="pi pi-file-excel" label="Import CSV" severity="warning"/>
+        </div> */}
         <div className="ml-4">
           <Button onClick={() => setExportVisible(true)} icon="pi pi-file-excel" label="Export Excel" />
         </div>
@@ -136,12 +136,10 @@ export default function Species(props) {
   function deleteSpecies(species) {
     console.log(species);
     if (confirm("Are you sure you want to delete this species?")) {
-      destroy(route("species.destroy", species.id), {
-        preserveScroll: true,
-        onFinish: () => reset(),
-      });
-
+      destroy(route("species.destroy", species.id));
     }
+
+
   }
 
   const header = renderHeader();
@@ -175,8 +173,8 @@ export default function Species(props) {
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" rowsPerPageOptions={[10, 25, 50]}>
             <Column field="access_number" header="No Akses" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
+            <Column field="genus" header="Genus" filter filterPlaceholder="Search by genus" sortable style={{ minWidth: '11rem' }} />
             <Column field="name" header="Nama" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
-            <Column field="local_name" header="Nama Lokal" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
             <Column field="famili.name" header="Famili" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
             <Column field="collection_origin" header="Asal Koleksi" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />
             <Column field="planting_date" header="Tanggal Tanam" filter filterPlaceholder="Search by name" sortable style={{ minWidth: '11rem' }} />

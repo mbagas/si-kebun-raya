@@ -30,7 +30,7 @@ export default function AddUser(props) {
       <Head title="Add User" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">
-          Tambah User
+          Edit User
         </h2>
         <form onSubmit={submit}>
           <div>
