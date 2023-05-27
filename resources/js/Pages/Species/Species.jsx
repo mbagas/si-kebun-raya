@@ -121,9 +121,9 @@ export default function Species(props) {
         <Link href={route('species.create')}>
           <Button type="button" icon="pi pi-plus" label="Tambah" severity="success" />
         </Link>
-        {/* <div className="ml-4">
+        <div className="ml-4">
           <Button onClick={() => setImportCsvVisible(true)} icon="pi pi-file-excel" label="Import CSV" severity="warning"/>
-        </div> */}
+        </div>
         <div className="ml-4">
           <Button onClick={() => setExportVisible(true)} icon="pi pi-file-excel" label="Export Excel" />
         </div>
@@ -214,7 +214,7 @@ export default function Species(props) {
         </div>
       </Dialog>
 
-      <Dialog header={'Export data spesies dengan CSV'} visible={importCsvVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setImportCsvVisible(false)}>
+      <Dialog header={'Import data spesies dengan CSV'} visible={importCsvVisible} style={{ maxWidth: '90vw', minWidth: '50vw' }} onHide={() => setImportCsvVisible(false)}>
         <form onSubmit={importCSV}>
           <div className="mt-4">
             <InputLabel htmlFor="image" value="File CSV" />
