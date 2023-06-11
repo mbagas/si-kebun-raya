@@ -32,135 +32,138 @@ export default function DetailSpeciesGuest(props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              No Kolektor :
-            </label>
+        <div className="px-4 py-5 bg-white rounded-lg shadow">
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                No Kolektor :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.collector_number}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.collector_number}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Nama Species :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Nama Species :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.genus} {props.species.name}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.genus} {props.species.name}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Nama Lokal :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Nama Lokal :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.local_name}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.local_name}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Famili :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Famili :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.famili.name}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.famili.name}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Tanggal Tanam :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Tanggal Tanam :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.planting_date}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.planting_date}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Asal Koleksi :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Asal Koleksi :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.collection_origin}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.collection_origin}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Jumlah di Lapangan :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Jumlah di Lapangan :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.amount_in_field}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.amount_in_field}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Deskripsi :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Deskripsi :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.description}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.description}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Manfaat :
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Manfaat :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.benefit}
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.benefit}
-            </label>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-2 w-72">
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              Cara Mendapatkan :
-            </label>
-          </div>
-          <div>
-            <label className="font-medium text-sm text-gray-700">
-              {props.species.way_to_collect}
-            </label>
+          <div className="grid grid-cols-2 gap-x-2 w-72">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Cara Mendapatkan :
+              </label>
+            </div>
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                {props.species.way_to_collect}
+              </label>
+            </div>
           </div>
         </div>
+        
 
 
         

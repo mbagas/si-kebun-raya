@@ -142,7 +142,7 @@ export default function AddSpecies(props) {
     let image = canvas.toDataURL("image/png");
     let anchor = document.createElement("a");
     anchor.href = image;
-    anchor.download = `qr-code.png`;
+    anchor.download = `${props.species.access_number}.png`;
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);

@@ -25,27 +25,30 @@ export default function BukuKebun(props) {
 
   const plotList = props.plots.map((item) => ({
     ...item,
-    optionName : item.name + ' - ' + item.child_name,
+    optionName: item.name + ' - ' + item.child_name,
   }))
 
   return (
     <AdminLayout>
-      <Head title="Buku Kebun"/>
-      <h2 className="text-2xl font-bold">
-        Buku Kebun
-      </h2>
-      <div className="mt-2 mb-5">
-        <div>
-          <InputLabel htmlFor="name" value="Pilih Petak" />
+      <Head title="Buku Kebun" />
+      <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
 
-          <Dropdown value={selectedPlot} onChange={(e) => setSelectedPlot(e.value)} options={plotList} optionLabel="optionName"
-            placeholder="Select a Petak" className="w-full md:w-14rem" />
-        </div>
-        <div>
-          <PrimaryButton onClick={handlePrint}>
-            Print
-          </PrimaryButton>
-          {/* <ReactToPrint
+
+        <h2 className="text-2xl font-bold">
+          Buku Kebun
+        </h2>
+        <div className="mt-2 mb-5" >
+          <div>
+            <InputLabel htmlFor="name" value="Pilih Petak" />
+
+            <Dropdown value={selectedPlot} onChange={(e) => setSelectedPlot(e.value)} options={plotList} optionLabel="optionName"
+              placeholder="Select a Petak" className="w-full md:w-14rem" />
+          </div>
+          <div className="mt-2">
+            <PrimaryButton onClick={handlePrint}>
+              Print
+            </PrimaryButton>
+            {/* <ReactToPrint
             trigger={() => {
               <PrimaryButton>
                 Print
@@ -53,9 +56,10 @@ export default function BukuKebun(props) {
             }}
             content={() => componentRef.current}
           /> */}
-        </div>
-        <div>
-          <TemplateBukuKebun data={selectedPlot} ref={componentRef} />
+          </div>
+          <div>
+            <TemplateBukuKebun data={selectedPlot} ref={componentRef} />
+          </div>
         </div>
       </div>
     </AdminLayout>

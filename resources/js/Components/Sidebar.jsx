@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Image } from 'primereact/image';
 export default function Sidebar({ children }) {
   const [open, setOpen] = useState(false);
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
   return (
     <>
       <div className="w-screen px-5 py-2 flex justify-between border-b-2 border-gray-300">

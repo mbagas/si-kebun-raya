@@ -16,9 +16,10 @@ class GuestController extends Controller
   public function index()
   {
     $cacheKey = 'species_cache';
-    $species = Cache::remember($cacheKey, 3600, function () {
-      return Species::with('famili', 'plot')->get();
-    });
+    // $species = Cache::remember($cacheKey, 3600, function () {
+    //   return Species::with('famili', 'plot')->get();
+    // });
+    $species = Species::with('famili', 'plot')->get();
 
     return Inertia::render('Guest/Landing', [
       'species' => $species,

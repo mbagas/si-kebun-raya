@@ -35,7 +35,7 @@ export default function Species(props) {
   const [filterByCara, setFilterByCara] = useState('Semua');
   const [filterByFamili, setFilterByFamili] = useState('Semua');
   const [filterByGenus, setFilterByGenus] = useState('Semua');
-
+  console.log(props.species)
 
   useEffect(() => {
 
@@ -133,10 +133,16 @@ export default function Species(props) {
   };
 
 
-  function deleteSpecies(species) {
-    console.log(species);
+  const deleteSpecies= async (species) => {
+    
     if (confirm("Are you sure you want to delete this species?")) {
-      destroy(route("species.destroy", species.id));
+      try {
+        await destroy(route("species.destroy", species.id));
+      } catch (error) {
+        console.log(error)
+      }
+      // console.log(species.id);
+      // await destroy(route("species.destroy", species.id));
     }
 
 
@@ -243,7 +249,7 @@ export default function Species(props) {
                 <li>File csv harus sesuai dengan format yang telah ditentukan</li>
                 <li>Data Famili dan VAK beserta anak petak yang blum tedaftar pada master data harus diinputkan terlebih dahulu pada master data</li>
                 <li>
-                  <p>Contoh format CSV : </p>
+                  <p>Contoh format CSV : <a className="font-semibold text-blue-700" href='/csv_format.csv' download>download contoh format</a> </p>
                   <table className="border-collapse border border-black w-full">
                     <thead>
                       <th className="border border-black p-1">nomor koleksi</th>

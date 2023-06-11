@@ -46,7 +46,7 @@ export function GuestsLayout({children}) {
             <div className="text-end flex-initial w-16 md:w-auto my-auto">
               <span className="text-end hidden md:block right-0 ">
                 <Link href={'/'} className="mr-5">Home</Link>
-                <Link href={route('data-request.create')}>Date Request</Link>
+                <Link href={route('data-request.create')}>Data Request</Link>
               </span>
               {/* <button onClick={() => setCollapse(!collapse)} className="text-end visible md:invisible lg:w-0 right-0">
                 <i className="pi pi-align-justify" style={{ fontSize: '1.5rem' }}></i>

@@ -12,7 +12,7 @@ import { Link } from '@inertiajs/react';
 export default function Landing(props) {
   const [filterData, setFilterData] = useState();
   const [speciesList, setSpeciesList] = useState(props.species);
-
+  console.log(speciesList)
   useEffect(() => {
     setSpeciesList(() => {
       if (!filterData) {
@@ -25,7 +25,7 @@ export default function Landing(props) {
   }, [filterData]);
 
   const handleImageError = (event) => {
-    event.target.src = 'no_image.jpg';
+    event.target.src = '/no_image.jpg';
   };
 
   return (

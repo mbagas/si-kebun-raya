@@ -43,7 +43,6 @@ export default function AddDataRequest(props) {
           'Jumlah di Pembibitan': item.amount_in_nurseries,
           'Jumlah di Lapangan': item.amount_in_field,
           'Total': item.total,
-          'Lokasi Tanam': item.planting_coordinate,
           'Cara Mendapatkan': item.way_to_collect,
         }));
       } else {
@@ -57,7 +56,6 @@ export default function AddDataRequest(props) {
           'Jumlah di Pembibitan': item.amount_in_nurseries,
           'Jumlah di Lapangan': item.amount_in_field,
           'Total': item.total,
-          'Lokasi Tanam': item.planting_coordinate,
           'Cara Mendapatkan': item.way_to_collect,
         }));
         console.log(items);

@@ -75,9 +75,9 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
                   return (
                     <>
                     <tr>
-                      <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {index} </td>
+                      <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {index +1} </td>
                         <td rowSpan={species.plant.length + 1} className="border border-black p-1"> {species.collection_number}{
-                          species.plant.length > 0 ? '-' + species.plant.map((item) => ' ' + species.collection_number + item.access_number) : ''
+                          species.plant.length > 0 ? '-' + species.plant.map((item) => ' ' + species.collection_number + (item.access_number ? item.access_number: '')) : ''
                         }  </td>
                       <td className="border border-black p-1"> {species.collector_number} </td>
                       <td className="border border-black p-1"> {species.access_number} </td>
@@ -131,21 +131,21 @@ const TemplateBukuKebun = React.forwardRef((props, ref) => {
           <div>
             <b>Jumlah total spesimen tertanam : {totalHidup+totalMati+totalSakit} </b>
           </div>
-          <div>
+          {/* <div>
             Indeterminate : 0
           </div>
           <div>
             Gendub : 0
-          </div>
+          </div> */}
           <div>
             Genus : {new Set(props.data.species.map((item) => item.genus)).size} ( {new Set(props.data.species.map((item) => item.genus+', '))} )
           </div>
           <div>
             Spesies : {props.data.species.length}
           </div>
-          <div>
+          {/* <div>
             Masih sp. : 0
-          </div>
+          </div> */}
           
         </div>
 

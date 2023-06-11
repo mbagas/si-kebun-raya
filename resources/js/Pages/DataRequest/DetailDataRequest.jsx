@@ -135,7 +135,7 @@ export default function DetailDataRequest(props) {
               </label>
             </div>
             <div className="col-span-2">
-              <label className="font-medium text-sm text-gray-700">
+              <label className="font-bold text-sm text-gray-700">
                 {props.dataRequest.status}
               </label>
             </div>
@@ -155,7 +155,7 @@ export default function DetailDataRequest(props) {
                   </label>
                 </div>
               </div>
-            ) : (
+            ) : props.dataRequest.status === 'Diterima' && props.dataRequest.status != 'Pending' ? (
                 <div className="grid grid-cols-3 gap-x-2">
                   <div>
                     <label className="font-medium text-sm text-gray-700">
@@ -168,7 +168,7 @@ export default function DetailDataRequest(props) {
                     </label>
                   </div>
                 </div>
-            )
+            ) : ''
           }
 
 
