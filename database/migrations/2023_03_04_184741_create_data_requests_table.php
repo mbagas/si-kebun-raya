@@ -17,6 +17,7 @@ return new class extends Migration
           $table->string('institute')->nullable();
           $table->string('email')->nullable();
           $table->text('reason')->nullable();
+          $table->string('document')->nullable();
           $table->bigInteger('family_id')->nullable();
           $table->string('type')->nullable();
           $table->string('status')->nullable();

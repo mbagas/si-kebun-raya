@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\Species;
 use App\Models\Families;
 use App\Notifications\DataRequestEmail;
+use Carbon\Carbon;
 
 class DataRequestsController extends Controller
 {
@@ -19,8 +20,8 @@ class DataRequestsController extends Controller
   {
     //
     $dataRequest = DataRequests::all();
-    return Inertia::render('DataRequest/DataRequest',[
-      'dataRequest' => $dataRequest->load('famili','species','species.famili','species.plot'),
+    return Inertia::render('DataRequest/DataRequest', [
+      'dataRequest' => $dataRequest->load('famili', 'species', 'species.famili', 'species.plot'),
     ]);
   }
 
@@ -50,30 +51,59 @@ class DataRequestsController extends Controller
       'institute' => 'required|string|max:255',
       'familyId' => 'integer|max:255|nullable',
       'reason' => 'required|string',
+      // 'document' => 'file|mimes:pdf|max:2048',
       'type' => 'required|string',
     ]);
-
-    if ($request->type == 'famili') {
-      $dataRequest = DataRequests::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'institute' => $request->institute,
-        'family_id' => $request->familyId,
-        'reason' => $request->reason,
-        'status' => 'Pending',
-        'type' => $request->type,
-      ]);
-    } else if ($request->type == 'species') {
-      $dataRequest = DataRequests::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'institute' => $request->institute,
-        // 'species_id' => json_encode($request->speciesId),
-        'reason' => $request->reason,
-        'status' => 'Pending',
-        'type' => $request->type,
-      ]);
-      $dataRequest->species()->attach($request->speciesId);
+    // dd($request);
+    // dd($request->file($request->document)->getError());
+    if (is_file($request->document)) {
+      $fileName = $request->name . '_' . Carbon::now()->format('ymdhis') . '.' . $request->document->extension();
+      $request->document->move(public_path('dataRequestDocument'), $fileName);
+      if ($request->type == 'famili') {
+        $dataRequest = DataRequests::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'institute' => $request->institute,
+          'family_id' => $request->familyId,
+          'reason' => $request->reason,
+          'document' => $fileName,
+          'status' => 'Pending',
+          'type' => $request->type,
+        ]);
+      } else if ($request->type == 'species') {
+        $dataRequest = DataRequests::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'institute' => $request->institute,
+          'reason' => $request->reason,
+          'document' => $fileName,
+          'status' => 'Pending',
+          'type' => $request->type,
+        ]);
+        $dataRequest->species()->attach($request->speciesId);
+      }
+    } else {
+      if ($request->type == 'famili') {
+        $dataRequest = DataRequests::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'institute' => $request->institute,
+          'family_id' => $request->familyId,
+          'reason' => $request->reason,
+          'status' => 'Pending',
+          'type' => $request->type,
+        ]);
+      } else if ($request->type == 'species') {
+        $dataRequest = DataRequests::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'institute' => $request->institute,
+          'reason' => $request->reason,
+          'status' => 'Pending',
+          'type' => $request->type,
+        ]);
+        $dataRequest->species()->attach($request->speciesId);
+      }
     }
 
     return to_route('data-request.create')->with('message', 'Data Request Successfully');
@@ -87,7 +117,7 @@ class DataRequestsController extends Controller
     //
     // dd($data_request->load('famili', 'species', 'species.famili', 'species.plot'));
     return Inertia::render('DataRequest/DetailDataRequest', [
-      'dataRequest' => $data_request->load('famili','species','species.famili','species.plot'),
+      'dataRequest' => $data_request->load('famili', 'species', 'species.famili', 'species.plot'),
     ]);
   }
 
@@ -105,7 +135,7 @@ class DataRequestsController extends Controller
   public function update(Request $request, DataRequests $data_request)
   {
 
-    if($request->status == "Diterima") {
+    if ($request->status == "Diterima") {
 
       $get_random_string = md5(microtime());
       $project = [
@@ -124,7 +154,7 @@ class DataRequestsController extends Controller
     } else if ($request->status == "Ditolak") {
       $project = [
         'greeting' => 'Hi ' . $request->name . ',',
-        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan : ' . $request->declineReason .'.',
+        'body' => 'Mohon maaf permintaan data tumbuhan anda tidak dapat kami terima dengan alasan : ' . $request->declineReason . '.',
         'result' => 'TIDAK DI TERIMA',
         'thanks' => 'Terima Kasih',
         'actionText' => 'Buka Web Kebun Raya ITERA',
@@ -137,9 +167,8 @@ class DataRequestsController extends Controller
         'token' => null,
       ]);
     };
-    
-    return to_route('data-request.index')->with('message', 'Validation Successfully');
 
+    return to_route('data-request.index')->with('message', 'Validation Successfully');
   }
 
   /**
@@ -149,6 +178,4 @@ class DataRequestsController extends Controller
   {
     //
   }
-
-  
 }

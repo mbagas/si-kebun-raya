@@ -40,9 +40,13 @@ class GuestController extends Controller
         'families' => $families,
         'status' => '200'
       ]);
-    } else {
+    } else if ($dataRequest && $diff > 30) {
       return Inertia::render('Guest/AddDataRequest', [
         'status' => '204'
+      ]);
+    } else {
+      return Inertia::render('Guest/AddDataRequest', [
+        'status' => '205'
       ]);
     }
   }

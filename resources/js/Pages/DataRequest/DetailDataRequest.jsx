@@ -44,7 +44,7 @@ export default function DetailDataRequest(props) {
         <h2 className="text-2xl font-bold">
           Detail Permintaan Data Tanaman
         </h2>
-        <div className="flex flex-col w-full md:w-80">
+        <div className="flex flex-col w-full md:w-3/5">
           <div className="grid grid-cols-3 gap-x-2">
             <div>
               <label className="font-medium text-sm text-gray-700">
@@ -125,6 +125,20 @@ export default function DetailDataRequest(props) {
               <label className="font-medium text-sm text-gray-700">
                 {props.dataRequest.reason}
               </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-x-2">
+            <div>
+              <label className="font-medium text-sm text-gray-700">
+                Dokumen Pendukung :
+              </label>
+            </div>
+            <div className="col-span-2">
+              {
+                props.dataRequest.document[1] == "" ? (<label className="font-medium text-sm text-gray-700">Tidak ada dokumen pendukung</label>) : (<a className="font-semibold text-blue-700" href={props.dataRequest.document[0]} download>download dokumen</a>)
+              }
+             
             </div>
           </div>
 

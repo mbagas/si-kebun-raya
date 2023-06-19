@@ -22,6 +22,7 @@ export default function AddDataRequest(props) {
     familyId: '',
     speciesId: '',
     reason: '',
+    document: '',
     token: '',
     type: 'famili'
   });
@@ -65,8 +66,10 @@ export default function AddDataRequest(props) {
       const wb = utils.book_new();
       utils.book_append_sheet(wb, ws, "Data");
       writeFileXLSX(wb, 'exportDataTumbuhan.xlsx');
-    } else if (props.status == '204') {
+    } else if (props.status == '205') {
       toast.current.show({ severity: 'error', summary: 'Token tidak ditemukan' });
+    } else if (props.status == '204') {
+      toast.current.show({ severity: 'error', summary: 'Masa waktu token telah melewati batas waktu 30 hari' });
     }
   },[])
 
@@ -235,6 +238,28 @@ export default function AddDataRequest(props) {
               <InputTextarea className="w-full" name="reason" autoResize value={data.reason} onChange={handleOnChange} rows={5} cols={90} />
 
               <InputError message={errors.reason} className="mt-2" />
+            </div>
+            <div className="mt-4">
+              <InputLabel htmlFor="image" value="Dokumen Pendukung" />
+
+              <input
+                type="file"
+                className="block w-full text-sm text-slate-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100"
+                label="File"
+                name="file"
+                onChange={(e) => {
+                  setData("document", e.target.files[0]);
+                }
+                }
+                accept=".pdf"
+              />
+
+              <InputError message={errors.document} className="mt-2" />
             </div>
             <div className="flex items-center justify-end mt-4 mb-10">
 

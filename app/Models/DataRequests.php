@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 
 class DataRequests extends Model
 {
@@ -18,6 +20,7 @@ class DataRequests extends Model
     'institute',
     'email',
     'reason',
+    'document',
     'family_id',
     'species_id',
     'status',
@@ -25,6 +28,13 @@ class DataRequests extends Model
     'decline_reason',
     'type'
   ];
+
+  protected function document(): Attribute
+  {
+    return Attribute::make(
+      get: fn ($value) => [url('dataRequestDocument/' . $value), $value],
+    );
+  }
 
   public function famili(): BelongsTo
   {
