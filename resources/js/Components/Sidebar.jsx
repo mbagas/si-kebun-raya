@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
 import { Image } from 'primereact/image';
-export default function Sidebar({ children }) {
+export default function Sidebar({ children, ...props }) {
   const [open, setOpen] = useState(false);
   const [collapse, setCollapse] = useState(true);
+  console.log('data request count : ', props.dataRequestCount)
   return (
     <>
       <div className="w-screen px-5 py-2 flex justify-between border-b-2 border-gray-300">
@@ -130,6 +131,13 @@ export default function Sidebar({ children }) {
                   >
                     <i className="pi pi-send" style={{ color: 'white', fontSize: '1.5rem' }}></i>
                     <span className="text-gray-100">Permintaan Data</span>
+                    {
+                      props.dataRequestCount > 0 && (
+                        <>
+                          <span className="flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform bg-red-600 rounded-full">{props.dataRequestCount}</span>
+                        </>
+                      )
+                    }
                   </Link>
                 </li>
                 <li className="rounded-sm">

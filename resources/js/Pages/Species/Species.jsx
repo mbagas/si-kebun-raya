@@ -154,7 +154,7 @@ export default function Species(props) {
     return <div className="grid grid-cols-3 gap-1">
       <Link href={route('species.show', rowData.id)}><Button icon="pi pi-eye" severity="success" /></Link>
       <Link href={route('species.edit', rowData.id)}><Button icon="pi pi-pencil" severity="warning" /></Link>
-      <Link><Button onClick={() => deleteSpecies(rowData)} icon="pi pi-trash" severity="danger" /></Link>
+      <Button onClick={() => deleteSpecies(rowData)} icon="pi pi-trash" severity="danger" />
     </div>;
   }
 
@@ -167,7 +167,7 @@ export default function Species(props) {
 
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="species" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">

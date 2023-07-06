@@ -59,7 +59,7 @@ class UsersController extends Controller
       ]);
 
       // return to_route('user.index');
-      return redirect()->back()->with('message', 'User has been created successfully');
+      return to_route('user.index')->with('message', 'User has been created successfully');
     }
 
     /**

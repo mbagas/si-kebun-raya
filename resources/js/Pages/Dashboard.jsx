@@ -60,18 +60,18 @@ export default function Dashboard(props) {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     const dataSpeciesByTime = {
-      labels: props.speciesByTime.map(item => monthNames[item.month - 1]),
+      labels: props.speciesByTime.map(item => item.year == selectedYear ? monthNames[item.month - 1] : null),
       datasets: [
         {
           label: 'Species',
-          data: props.speciesByTime.map(item => item.total),
+          data: props.speciesByTime.map(item => item.year == selectedYear ? item.total : null),
           fill: false,
           borderColor: documentStyle.getPropertyValue('--blue-500'),
           tension: 0.4
         },
         {
           label: 'Spesimen',
-          data: props.plantsByTime.map(item => item.total),
+          data: props.plantsByTime.map(item => item.year == selectedYear ? item.total : null),
           fill: false,
           borderColor: documentStyle.getPropertyValue('--pink-500'),
           tension: 0.4
@@ -112,6 +112,35 @@ export default function Dashboard(props) {
     setChartOptionsChartline(optionsChartLine);
 
   }, []);
+
+  const dataSpeciesByTime = useMemo(() => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    let filteredSpeciesData = props.speciesByTime.filter(item => item.year == selectedYear);
+    let filteredPlantData = props.plantsByTime.filter(item => item.year == selectedYear);
+
+    console.log(filteredSpeciesData.map(item => item.month));
+    let data = {
+      labels: filteredSpeciesData.map(item => monthNames[item.month - 1]),
+      datasets: [
+        {
+          label: 'Species',
+          data: filteredSpeciesData.map(item => item.total),
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          tension: 0.4
+        },
+        {
+          label: 'Spesimen',
+          data: filteredPlantData.map(item => item.total),
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--pink-500'),
+          tension: 0.4
+        }
+      ]
+    };
+    console.log(props.speciesByTime)
+    return data;
+  }, [selectedYear]);
   
   const generateColors = (count) => {
     const colors = [];
@@ -153,7 +182,7 @@ export default function Dashboard(props) {
   
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Dashboard" />
 
       <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-5">
@@ -206,7 +235,7 @@ export default function Dashboard(props) {
         <Dropdown value={selectedYear} onChange={(e) => setSelectedYear(e.value)} options={years}
           placeholder="Select Year" className="w-full md:w-1/3 mb-3" />
 
-        <Chart type="line" data={chartDataSpeciesByTime} options={chartOptionsChartLine} className=" w-full " />
+        <Chart type="line" data={dataSpeciesByTime} options={chartOptionsChartLine} className=" w-full " />
       </div>
 
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow grid justify-items-center mb-6">

@@ -61,12 +61,12 @@ export default function User(props) {
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
       <Link href={route('user.edit', rowData)}><Button icon="pi pi-pencil" severity="warning" /></Link>
-      <Link><Button onClick={() => deleteUser(rowData)} icon="pi pi-trash" severity="danger" /></Link>
+      <Button onClick={() => deleteUser(rowData)} icon="pi pi-trash" severity="danger" />
     </div>;
   }
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="User" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">

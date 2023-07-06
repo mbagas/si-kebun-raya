@@ -19,7 +19,7 @@ class DataRequestsController extends Controller
   public function index()
   {
     //
-    $dataRequest = DataRequests::all();
+    $dataRequest = DataRequests::orderBy('created_at', 'desc')->get();
     return Inertia::render('DataRequest/DataRequest', [
       'dataRequest' => $dataRequest->load('famili', 'species', 'species.famili', 'species.plot'),
     ]);
@@ -178,4 +178,5 @@ class DataRequestsController extends Controller
   {
     //
   }
+
 }

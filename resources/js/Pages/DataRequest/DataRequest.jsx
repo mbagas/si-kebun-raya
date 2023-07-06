@@ -6,6 +6,7 @@ import { Column } from 'primereact/column';
 import { useState } from "react";
 import { Button } from 'primereact/button';
 import { Link } from '@inertiajs/react';
+import moment from 'moment'
 
 export default function DataRequest(props) {
   const [loading, setLoading] = useState(false);
@@ -22,8 +23,14 @@ export default function DataRequest(props) {
     </div>;
   }
 
+  const timeCreated = (rowData, column) => {
+    return <div className="grid grid-cols-2 gap-1">
+      <p>{moment(rowData.created_at).format('yyyy-MM-DD HH:m')}</p>
+    </div>;
+  }
+
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Permintaan Data" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">
@@ -38,6 +45,7 @@ export default function DataRequest(props) {
             <Column field="email" header="Email" filter filterPlaceholder="Search by email" sortable style={{ minWidth: '12rem' }} />
             <Column field="institute" header="Institusi" filter filterPlaceholder="Search by institute" sortable style={{ minWidth: '12rem' }} />
             <Column field="status" header="Status" filter filterPlaceholder="Search by status" sortable style={{ minWidth: '12rem' }} />
+            <Column field="created_at" header="Tanggal" body={(e) => timeCreated(e)} filter filterPlaceholder="Search by Tanggal" sortable style={{ minWidth: '12rem' }} />
             <Column field="modifiedTime" header="Action" body={(e) => actionTemplate(e)} style={{ minWidth: '10rem' }} />
           </DataTable>
         </div>

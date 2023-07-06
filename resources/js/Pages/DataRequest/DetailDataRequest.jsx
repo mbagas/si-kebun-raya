@@ -38,7 +38,7 @@ export default function DetailDataRequest(props) {
 
   console.log(props);
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Detail Data Request" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
         <h2 className="text-2xl font-bold">

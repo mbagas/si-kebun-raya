@@ -132,7 +132,7 @@ export default function AddSpecies(props) {
   const actionTemplate = (rowData, column) => {
     return <div className="grid grid-cols-2 gap-1">
       <Button icon="pi pi-pencil" onClick={() => editPlant(rowData)} severity="warning" />
-      <Link><Button onClick={() => deletePlant(rowData)} icon="pi pi-trash" severity="danger" /></Link>
+      <Button onClick={() => deletePlant(rowData)} icon="pi pi-trash" severity="danger" />
     </div>;
   }
 
@@ -149,7 +149,7 @@ export default function AddSpecies(props) {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Add Species" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4">

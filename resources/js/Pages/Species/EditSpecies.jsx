@@ -69,7 +69,7 @@ export default function AddSpecies(props) {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Add Species" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow ">
 

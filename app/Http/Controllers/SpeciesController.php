@@ -279,7 +279,7 @@ class SpeciesController extends Controller
       }
     }
     $species->delete();
-    return to_route('families.index')->with('message', 'Delete Successfully');
+    return to_route('species.index')->with('message', 'Delete Successfully');
   }
 
   public function import(Request $request)

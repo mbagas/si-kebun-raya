@@ -23,7 +23,7 @@ export default function AddFamili(props) {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout dataRequestCount={props.dataRequestCount}>
       <Head title="Add famili" />
       <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
 
